@@ -26,3 +26,7 @@ Techs:
 - Nodemailer
 - SOLID 
 - Testes unitários com Jest
+
+# Aula 4 <!-- #StepByStep -->
+
+- React Native com Expo basicamente
