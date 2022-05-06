@@ -30,3 +30,7 @@ Techs:
 # Aula 4 <!-- #StepByStep -->
 
 - React Native com Expo basicamente
+
+# Aula 5 <!-- #MissionAccomplished -->
+
+- Deploy do front na Vercel e do back no Railway
