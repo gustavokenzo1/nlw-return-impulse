@@ -2,9 +2,11 @@ import { SubmitFeedbackUseCase } from "./submit-feedback-use-case";
 
 const createFeedbackSpy = jest.fn();
 const sendMailSpy = jest.fn();
+// This doesn't feel right:
+const readFeedbackSpy = jest.fn();
 
 const submitFeedback = new SubmitFeedbackUseCase(
-  { create: createFeedbackSpy },
+  { create: createFeedbackSpy, read: readFeedbackSpy },
   { sendMail: sendMailSpy }
 );
 
@@ -18,8 +20,8 @@ describe("Submit feedback", () => {
       })
     ).resolves.not.toThrow();
 
-    expect(createFeedbackSpy).toBeCalled()
-    expect(sendMailSpy).toBeCalled()
+    expect(createFeedbackSpy).toBeCalled();
+    expect(sendMailSpy).toBeCalled();
   });
 
   it("should not be able to submit feedback without a type", async () => {

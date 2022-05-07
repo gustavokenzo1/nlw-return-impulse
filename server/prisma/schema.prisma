@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -17,5 +17,19 @@ model Feedback {
   comment    String
   screenshot String?
 
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
   @@map("feedbacks")
+}
+
+model User {
+  id String @id @default(uuid())
+
+  name      String
+  email     String
+  password  String
+  isAdmin   Boolean
+  feedbacks Feedback[]
+
+  @@map("users")
 }
