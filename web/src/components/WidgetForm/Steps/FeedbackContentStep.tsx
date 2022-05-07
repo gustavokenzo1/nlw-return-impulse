@@ -47,7 +47,7 @@ export function FeedbackContentStep({
         >
           <ArrowLeft weight="bold" className="w-4 h-4 " />
         </button>
-        <span className="text-xl leading-6 flex items-center gap-2">
+        <span className="text-xl leading-6 flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
           <img
             src={feedbackTypeInfo.image.source}
             alt={feedbackTypeInfo.image.alt}
