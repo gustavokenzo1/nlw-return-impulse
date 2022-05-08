@@ -89,12 +89,12 @@ routes.post("/login", async (req, res) => {
   const loginUserUseCase = new LoginUserUseCase(prismaUsersRepository);
 
   try {
-    await loginUserUseCase.execute({
+    const user = await loginUserUseCase.execute({
       email,
       password,
     });
 
-    return res.status(200).send();
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(400).send(error);
   }

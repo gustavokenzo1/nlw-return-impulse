@@ -11,5 +11,5 @@ export interface UserCreateData {
 export interface UsersRepository {
   create: (data: UserCreateData) => Promise<void>;
   read: () => Promise<object[]>;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<object>;
 }

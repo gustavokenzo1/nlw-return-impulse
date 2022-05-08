@@ -53,7 +53,7 @@ export class PrismaUsersRepository implements UsersRepository {
       const isPasswordValid = await bcrypt.compare(password, user.password);
 
       if (isPasswordValid) {
-        return;
+        return user;
       } else {
         throw new Error("Invalid password");
       }
