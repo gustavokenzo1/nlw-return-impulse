@@ -4,19 +4,31 @@ import bcrypt from "bcryptjs";
 
 export class PrismaUsersRepository implements UsersRepository {
   async create({ name, email, password, isAdmin }: UserCreateData) {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    if (name && email && password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-    try {
-      await prisma.user.create({
-        data: {
-          name,
+      const userExists = await prisma.user.count({
+        where: {
           email,
-          password: hashedPassword,
-          isAdmin,
         },
       });
-    } catch (error) {
-      throw error;
+
+      if (userExists === 0) {
+        try {
+          await prisma.user.create({
+            data: {
+              name,
+              email,
+              password: hashedPassword,
+              isAdmin,
+            },
+          });
+        } catch (error) {
+          throw error;
+        }
+      } else {
+        throw new Error("User already exists");
+      }
     }
   }
 
@@ -27,6 +39,26 @@ export class PrismaUsersRepository implements UsersRepository {
       return users;
     } catch (error) {
       throw error;
+    }
+  }
+
+  async login(email: string, password: string) {
+    const user = await prisma.user.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    if (user) {
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+
+      if (isPasswordValid) {
+        return;
+      } else {
+        throw new Error("Invalid password");
+      }
+    } else {
+      throw new Error("User not found");
     }
   }
 }

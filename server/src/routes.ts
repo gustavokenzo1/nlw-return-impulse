@@ -3,6 +3,7 @@ import { NodemailerMailAdapter } from "./adapters/nodemailer/nodemailer-mail-ada
 import { PrismaFeedbacksRepository } from "./repositories/prisma/prisma-feedbacks-repository";
 import { PrismaUsersRepository } from "./repositories/prisma/prisma-users-repository";
 import { CreateUserUseCase } from "./use-cases/create-user-use-case";
+import { LoginUserUseCase } from "./use-cases/login-user-use-case";
 import { ReadFeedbackUseCase } from "./use-cases/read-feedback-use-case";
 import { ReadUsersUseCase } from "./use-cases/read-users-use-case";
 import { SubmitFeedbackUseCase } from "./use-cases/submit-feedback-use-case";
@@ -53,15 +54,19 @@ routes.post("/users", async (req, res) => {
   const prismaUsersRepository = new PrismaUsersRepository();
   const createUserUseCase = new CreateUserUseCase(prismaUsersRepository);
 
-  await createUserUseCase.execute({
-    name,
-    email,
-    password,
-    isAdmin,
-    feedback: [],
-  });
+  try {
+    await createUserUseCase.execute({
+      name,
+      email,
+      password,
+      isAdmin,
+      feedback: [],
+    });
 
-  return res.status(201).send();
+    return res.status(201).send();
+  } catch (error) {
+    return res.status(400).send(error);
+  }
 });
 
 routes.get("/users", async (req, res) => {
@@ -74,5 +79,23 @@ routes.get("/users", async (req, res) => {
     return res.status(200).json(users);
   } catch (error) {
     throw error;
+  }
+});
+
+routes.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  const prismaUsersRepository = new PrismaUsersRepository();
+  const loginUserUseCase = new LoginUserUseCase(prismaUsersRepository);
+
+  try {
+    await loginUserUseCase.execute({
+      email,
+      password,
+    });
+
+    return res.status(200).send();
+  } catch (error) {
+    return res.status(400).send(error);
   }
 });
