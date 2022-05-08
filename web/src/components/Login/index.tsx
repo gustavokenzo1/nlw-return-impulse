@@ -1,8 +1,10 @@
 import { ArrowLeft } from "phosphor-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../../context/auth";
 import { api } from "../../libs/api";
 import { CloseButton } from "../CloseButton";
+import { Loading } from "../WidgetForm/Loading";
 
 interface Props {
   setLogin: (login: boolean) => void;
@@ -13,10 +15,12 @@ export function Login({ setLogin, setRegister }: Props) {
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm();
 
+  const { login } = useAuth();
+
   async function handleLogin(data: object) {
     setLoading(true);
     try {
-      const response = await api.post("/login", data);
+      const response = await login(data);
 
       if (response.status === 200) {
         setLoading(false);
@@ -77,7 +81,7 @@ export function Login({ setLogin, setRegister }: Props) {
           type="submit"
           className="self-center p-2 w-32 mb-4 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
         >
-          Login
+          {loading ? <Loading /> : "Login"}
         </button>
       </form>
       <div className="mb-4">
