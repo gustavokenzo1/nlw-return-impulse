@@ -12,7 +12,7 @@ import useDarkMode from "../../hook/useDarkMode";
 import { Login } from "../Login";
 import { Register } from "../Register";
 import { useAuth } from "../../context/auth";
-import { ModalProps } from "../Modal";
+import { ModalProps, UserProps } from "../Modal";
 
 export const feedbackTypes = {
   BUG: {
@@ -47,7 +47,7 @@ export function WidgetForm({ setModal }: ModalProps) {
   const [login, setLogin] = useState(false);
   const [register, setRegister] = useState(false);
 
-  const { signed } = useAuth();
+  const { signed, user } = useAuth();
 
   useEffect(() => {
     if (localStorage.getItem("theme") === "dark") {
@@ -104,7 +104,9 @@ export function WidgetForm({ setModal }: ModalProps) {
                         className="p-2 w-3/4 mb-4 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
                         onClick={() => setModal(true)}
                       >
-                        Acompanhar seus feedbacks
+                        {(user as UserProps)!.isAdmin
+                          ? "Painel de Administrador"
+                          : "Acompanhar seus feedbacks"}
                       </button>
                     )}
                   </>
