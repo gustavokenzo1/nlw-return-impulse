@@ -1,4 +1,4 @@
-import { FeedbacksRepository } from "../repositories/feedbacks-repository";
+import { FeedbacksRepository } from "../../repositories/feedbacks-repository";
 
 export class ReadAllFeedbacksUseCase {
   constructor(private feedbacksRepository: FeedbacksRepository) {}

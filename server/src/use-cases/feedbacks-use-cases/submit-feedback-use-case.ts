@@ -1,5 +1,5 @@
-import { MailAdapter } from "../adapters/mail-adapter";
-import { FeedbacksRepository } from "../repositories/feedbacks-repository";
+import { MailAdapter } from "../../adapters/mail-adapter";
+import { FeedbacksRepository } from "../../repositories/feedbacks-repository";
 
 export interface SubmitFeedbackUseCaseRequest {
   type: string;

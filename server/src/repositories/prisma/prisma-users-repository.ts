@@ -61,4 +61,29 @@ export class PrismaUsersRepository implements UsersRepository {
       throw new Error("User not found");
     }
   }
+
+  async update(id: string, data: UserCreateData) {
+    try {
+      await prisma.user.update({
+        where: {
+          id,
+        },
+        data,
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async delete(id: string) {
+    try {
+      await prisma.user.delete({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
 }

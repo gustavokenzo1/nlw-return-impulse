@@ -1,4 +1,4 @@
-import { UserCreateData, UsersRepository } from "../repositories/users-repository";
+import { UserCreateData, UsersRepository } from "../../repositories/users-repository";
 
 export class LoginUserUseCase {
   constructor(private usersRepository: UsersRepository) {}

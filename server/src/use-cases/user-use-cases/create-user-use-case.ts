@@ -1,7 +1,7 @@
 import {
   UserCreateData,
   UsersRepository,
-} from "../repositories/users-repository";
+} from "../../repositories/users-repository";
 
 export class CreateUserUseCase {
   constructor(private usersRepository: UsersRepository) {}
