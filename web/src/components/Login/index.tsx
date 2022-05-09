@@ -26,6 +26,7 @@ export function Login({ setLogin, setRegister }: Props) {
         setLoading(false);
         setLogin(false);
         setRegister(false);
+        localStorage.setItem("user", JSON.stringify(response.data));
       } else {
         setLoading(false);
         alert(

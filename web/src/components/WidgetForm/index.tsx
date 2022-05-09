@@ -12,6 +12,7 @@ import useDarkMode from "../../hook/useDarkMode";
 import { Login } from "../Login";
 import { Register } from "../Register";
 import { useAuth } from "../../context/auth";
+import { ModalProps } from "../Modal";
 
 export const feedbackTypes = {
   BUG: {
@@ -39,7 +40,7 @@ export const feedbackTypes = {
 
 export type FeedbackType = keyof typeof feedbackTypes;
 
-export function WidgetForm() {
+export function WidgetForm({ setModal }: ModalProps) {
   const [colorTheme, setTheme] = useDarkMode();
   const [feedbackType, setFeedbackType] = useState<FeedbackType | null>(null);
   const [feedbackSent, setFeedbackSent] = useState(false);
@@ -101,7 +102,7 @@ export function WidgetForm() {
                       <button
                         type="button"
                         className="p-2 w-3/4 mb-4 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
-                        onClick={() => {}}
+                        onClick={() => setModal(true)}
                       >
                         Acompanhar seus feedbacks
                       </button>

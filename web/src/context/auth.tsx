@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../libs/api";
 
 interface LoginResponse {
@@ -15,6 +15,12 @@ const AuthContext = createContext({} as AuthContextData);
 
 export default function AuthProvider({ children }: any) {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      setUser(JSON.parse(localStorage.getItem("user")!));
+    }
+  }, [])
 
   async function login(data: object) {
     const response = await api.post("/login", data);
