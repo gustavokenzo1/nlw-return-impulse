@@ -52,7 +52,7 @@ export function FeedbackContentStep({
           className="top-5 left-5 absolute text-zinc-400 hover:text-zinc-100"
           onClick={onFeedbackRestartRequested}
         >
-          <ArrowLeft weight="bold" className="w-4 h-4 " />
+          <ArrowLeft weight="bold" className="w-4 h-4 dark:hover:text-zinc-100 hover:text-zinc-800" />
         </button>
         <span className="text-xl leading-6 flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
           <img

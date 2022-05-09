@@ -65,6 +65,7 @@ export default function Modal({ setModal }: ModalProps) {
   const [showFeedbacks, setShowFeedbacks] = useState<FeedbackProps[]>([]);
   const [screenshot, setScreenshot] = useState<string>("");
   const [feedbackType, setFeedbackType] = useState<string>("");
+  const [users, setUsers] = useState<UserProps[]>([]);
 
   const { user, logout } = useAuth();
   const [userData, setUserData] = useState(user as UserProps);
@@ -107,6 +108,7 @@ export default function Modal({ setModal }: ModalProps) {
   }
 
   function handleSelect(e: any) {
+    setUsers([]);
     setFeedbackType(e.target.value);
     if (e.target.value !== "ALL") {
       setShowFeedbacks(
@@ -133,6 +135,15 @@ export default function Modal({ setModal }: ModalProps) {
     );
   }
 
+  async function handleGetUsers() {
+    try {
+      const response = await api.get("/users");
+      setUsers(await response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <Backdrop>
       <AnimatePresence exitBeforeEnter>
@@ -157,7 +168,7 @@ export default function Modal({ setModal }: ModalProps) {
         initial="hidden"
         animate="visible"
         exit="exit"
-        className="w-4/5 md:w-3/4 h-3/4 absolute dark:bg-zinc-900 bg-white p-6 rounded-lg flex flex-col items-center justify-betwee transition-all"
+        className="w-4/5 md:w-3/4 h-3/4 absolute dark:bg-zinc-900 bg-white p-6 rounded-lg flex flex-col items-center justify-betwee transition-colors"
       >
         <div className="flex w-full justify-between items-center mb-4">
           {colorTheme === "light" ? (
@@ -183,7 +194,7 @@ export default function Modal({ setModal }: ModalProps) {
           />
         </div>
         {userData.isAdmin && (
-          <div className="mb-4">
+          <div className="mb-4 flex w-full justify-between">
             <select
               onChange={(e) => handleSelect(e)}
               className="text-zinc-800 rounded-md bg-white dark:bg-zinc-800 dark:text-zinc-100"
@@ -196,106 +207,147 @@ export default function Modal({ setModal }: ModalProps) {
               <option value="IDEA">Ideia</option>
               <option value="OTHER">Outro</option>
             </select>
+            <button
+              onClick={handleGetUsers}
+              className="p-2 w-1/5 mt-4 bg-brand-500 rounded-md border-transparent flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
+            >
+              Ver usuários
+            </button>
           </div>
         )}
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full scrollbar-thumb-zinc-700 scrollbar-track-transparent scrollbar-thin">
-          {showFeedbacks.length > 0 ? (
+          {users.length > 0 ? (
             <table className="mt-2 w-full text-sm text-left text-zinc-800 dark:text-zinc-200">
               <thead className="text-xs uppercase bg-brand-500 text-zinc-100 text-center">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    Tipo
+                    Nome
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Feedback
+                    Email
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Screenshot
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Data
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Status
+                    Administrador
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
-                {showFeedbacks.map((feedback) => (
-                  <tr
-                    key={feedback.id}
-                    className="border-b hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-all"
-                  >
-                    <td className="text-center px-6 py-3">{feedback.type}</td>
-                    <td className="text-center px-6 py-3">
-                      {feedback.comment}
-                    </td>
+                {users.map((user) => (
+                  <tr key={user.id}>
+                    <td className="px-6 py-3 text-center">{user.name}</td>
+                    <td className="px-6 py-3 text-center">{user.email}</td>
                     <td className="px-6 py-3 text-center">
-                      {feedback.screenshot ? (
-                        <div
-                          className="flex justify-center items-center cursor-pointer"
-                          onClick={() => showScreenshot(feedback.screenshot)}
-                        >
-                          <img
-                            src={feedback.screenshot}
-                            alt="screenshot"
-                            className="hover:opacity-50 opacity-75 w-1/2 transition-all"
-                          />
-                          <div className="absolute">
-                            <MagnifyingGlassPlus size={18} />
-                          </div>
-                        </div>
-                      ) : (
-                        "Nenhuma foto"
-                      )}
+                      {user.isAdmin ? "Sim" : "Não"}
                     </td>
-                    <td className="text-center px-6 py-3">
-                      {new Date(feedback.createdAt).toLocaleDateString(
-                        "pt-BR",
-                        {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        }
-                      )}
-                    </td>
-                    {!userData.isAdmin ? (
-                      <td className="px-6 py-3 flex justify-center items-center">
-                        {feedback.wasReviewed === true ? (
-                          <Checks size={24} color="#8257e6" />
-                        ) : (
-                          <Clock size={24} />
-                        )}
-                      </td>
-                    ) : (
-                      <td className="px-6 py-3 flex justify-center items-center">
-                        {feedback.wasReviewed === true ? (
-                          <ThumbsUp
-                            size={24}
-                            weight="fill"
-                            color="#8257e6"
-                            className="cursor-pointer"
-                          />
-                        ) : (
-                          <ThumbsUp
-                            size={24}
-                            className="cursor-pointer"
-                            color="#8257e6"
-                            onClick={() => handleWasReviewed(feedback.id)}
-                          />
-                        )}
-                      </td>
-                    )}
                   </tr>
                 ))}
               </tbody>
             </table>
           ) : (
-            <h1 className="text-zinc-800 text-center">
-              {userData.isAdmin
-                ? "Nenhum feedback encontrado"
-                : "Você ainda não deixou nenhum feedback :/"}
-            </h1>
+            <>
+              {showFeedbacks.length > 0 ? (
+                <table className="mt-2 w-full text-sm text-left text-zinc-800 dark:text-zinc-200">
+                  <thead className="text-xs uppercase bg-brand-500 text-zinc-100 text-center">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        Tipo
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Feedback
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Screenshot
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Data
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
+                    {showFeedbacks.map((feedback) => (
+                      <tr
+                        key={feedback.id}
+                        className="border-b hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-all"
+                      >
+                        <td className="text-center px-6 py-3">
+                          {feedback.type}
+                        </td>
+                        <td className="text-center px-6 py-3">
+                          {feedback.comment}
+                        </td>
+                        <td className="px-6 py-3 text-center">
+                          {feedback.screenshot ? (
+                            <div
+                              className="flex justify-center items-center cursor-pointer"
+                              onClick={() =>
+                                showScreenshot(feedback.screenshot)
+                              }
+                            >
+                              <img
+                                src={feedback.screenshot}
+                                alt="screenshot"
+                                className="hover:opacity-50 opacity-75 w-1/2 transition-all"
+                              />
+                              <div className="absolute">
+                                <MagnifyingGlassPlus size={18} />
+                              </div>
+                            </div>
+                          ) : (
+                            "Nenhuma foto"
+                          )}
+                        </td>
+                        <td className="text-center px-6 py-3">
+                          {new Date(feedback.createdAt).toLocaleDateString(
+                            "pt-BR",
+                            {
+                              day: "numeric",
+                              month: "long",
+                              year: "numeric",
+                            }
+                          )}
+                        </td>
+                        {!userData.isAdmin ? (
+                          <td className="px-6 py-3 flex justify-center items-center">
+                            {feedback.wasReviewed === true ? (
+                              <Checks size={24} color="#8257e6" />
+                            ) : (
+                              <Clock size={24} />
+                            )}
+                          </td>
+                        ) : (
+                          <td className="px-6 py-3 flex justify-center items-center">
+                            {feedback.wasReviewed === true ? (
+                              <ThumbsUp
+                                size={24}
+                                weight="fill"
+                                color="#8257e6"
+                                className="cursor-pointer"
+                              />
+                            ) : (
+                              <ThumbsUp
+                                size={24}
+                                className="cursor-pointer"
+                                color="#8257e6"
+                                onClick={() => handleWasReviewed(feedback.id)}
+                              />
+                            )}
+                          </td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <h1 className="text-zinc-800 text-center">
+                  {userData.isAdmin
+                    ? "Nenhum feedback encontrado"
+                    : "Você ainda não deixou nenhum feedback :/"}
+                </h1>
+              )}
+            </>
           )}
         </div>
         <div className="w-full flex justify-center">

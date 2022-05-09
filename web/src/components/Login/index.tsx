@@ -48,7 +48,10 @@ export function Login({ setLogin, setRegister }: Props) {
           className="top-5 left-5 absolute text-zinc-400 hover:text-zinc-100"
           onClick={() => setLogin(false)}
         >
-          <ArrowLeft weight="bold" className="w-4 h-4 " />
+          <ArrowLeft
+            weight="bold"
+            className="w-4 h-4 dark:hover:text-zinc-100 hover:text-zinc-800"
+          />
         </button>
         <CloseButton />
       </header>

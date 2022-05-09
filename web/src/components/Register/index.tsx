@@ -47,7 +47,7 @@ export function Register({ setRegister, setLogin }: Props) {
             setLogin(true);
           }}
         >
-          <ArrowLeft weight="bold" className="w-4 h-4 " />
+          <ArrowLeft weight="bold" className="w-4 h-4 dark:hover:text-zinc-100 hover:text-zinc-800" />
         </button>
         <CloseButton />
       </header>
