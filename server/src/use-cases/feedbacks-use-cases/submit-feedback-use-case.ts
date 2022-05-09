@@ -30,13 +30,16 @@ export class SubmitFeedbackUseCase {
     }
 
     await this.feedbacksRepository.create({ type, comment, screenshot, user });
+
     await this.mailAdapter.sendMail({
       subject: "Feedback do usuário",
       body: [
-        `<div style="font-family: sans-serif; font-size: 16px; color: #111">`,
-        `<p>Tipo do Feedback: ${type}</p>`,
-        `<p>Comentário: ${comment}</p>`,
-        screenshot ? `<img src="${screenshot}" />` : ``,
+        `<div style="width: 100%; font-family: sans-serif; font-size: 16px; color: #111" display: flex; flex-direction: column; text-align: center; justify-content: center; align-items: center>`,
+        `<h1 style="font-size: 24px; font-weight: bold; margin-bottom: 16px; color: #8257e6">Novo Feedback!</h1>`,
+        `<p style="font-size: 16px; margin-bottom: 16px;">`,
+        `<strong>Tipo:</strong> ${type}<br>`,
+        `<strong>Comentário:</strong> ${comment}<br>`,
+        screenshot ? `Para ver a imagem, abra o Painel de Administrador` : ``,
         `</div>`,
       ].join("\n"),
     });

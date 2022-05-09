@@ -1,20 +1,27 @@
 import nodemailer from "nodemailer";
 import { MailAdapter, SendMailData } from "../mail-adapter";
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 const transport = nodemailer.createTransport({
-  host: "smtp.mailtrap.io",
-  port: 2525,
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
   auth: {
-    user: "8d365613b7368c",
-    pass: "b69147006320c0",
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+  tls: {
+    rejectUnauthorized: false,
   },
 });
 
 export class NodemailerMailAdapter implements MailAdapter {
-  async sendMail({subject, body}: SendMailData) {
+  async sendMail({ subject, body }: SendMailData) {
     await transport.sendMail({
-      from: "Equipe FeedGet <feedbacks@feedget.com>",
-      to: "Gustavo Kenzo <gustavokenzo314@gmail.com>",
+      from: "Equipe FeedGet <feedget.impulse@gmail.com>",
+      to: ["feedget.impulse@gmail.com"],
       subject: subject,
       html: body,
     });
