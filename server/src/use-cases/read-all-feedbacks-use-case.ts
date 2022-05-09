@@ -1,11 +1,11 @@
 import { FeedbacksRepository } from "../repositories/feedbacks-repository";
 
-export class ReadFeedbackUseCase {
+export class ReadAllFeedbacksUseCase {
   constructor(private feedbacksRepository: FeedbacksRepository) {}
 
-  async execute(userId: string) {
+  async execute() {
     try {
-      const feedbacks = await this.feedbacksRepository.read(userId);
+      const feedbacks = await this.feedbacksRepository.readAll();
 
       return feedbacks;
     } catch (error) {

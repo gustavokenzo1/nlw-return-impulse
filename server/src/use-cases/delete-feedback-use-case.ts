@@ -1,13 +1,11 @@
 import { FeedbacksRepository } from "../repositories/feedbacks-repository";
 
-export class ReadFeedbackUseCase {
+export class DeleteFeedbackUseCase {
   constructor(private feedbacksRepository: FeedbacksRepository) {}
 
-  async execute(userId: string) {
+  async execute(id: string) {
     try {
-      const feedbacks = await this.feedbacksRepository.read(userId);
-
-      return feedbacks;
+      await this.feedbacksRepository.delete(id);
     } catch (error) {
       throw error;
     }

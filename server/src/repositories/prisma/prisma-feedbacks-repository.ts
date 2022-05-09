@@ -20,10 +20,48 @@ export class PrismaFeedbacksRepository implements FeedbacksRepository {
     }
   }
 
-  async read() {
+  async read(userId: string) {
+    try {
+      const feedbacks = await prisma.feedback.findMany({
+        where: {
+          userId,
+        },
+      });
+
+      return feedbacks;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async update(id: string, data: object) {
+    try {
+      await prisma.feedback.update({
+        where: {
+          id,
+        },
+        data,
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async delete(id: string) {
+    try {
+      await prisma.feedback.delete({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async readAll() {
     try {
       const feedbacks = await prisma.feedback.findMany();
-
       return feedbacks;
     } catch (error) {
       throw error;
