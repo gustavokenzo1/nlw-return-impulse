@@ -48,7 +48,7 @@ interface FeedbackProps {
 export default function Modal({ setModal }: ModalProps) {
   const [feedbacks, setFeedbacks] = useState<FeedbackProps[]>([]);
   const [screenshot, setScreenshot] = useState<string>("");
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     async function getFeedbacks() {
@@ -95,7 +95,7 @@ export default function Modal({ setModal }: ModalProps) {
         <h1>Seus feedbacks</h1>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full scrollbar-thumb-zinc-700 scrollbar-track-transparent scrollbar-thin">
           {feedbacks ? (
-            <table className="w-full text-sm text-left text-zinc-800 dark:text-zinc-200">
+            <table className="mt-2 w-full text-sm text-left text-zinc-800 dark:text-zinc-200">
               <thead className="text-xs uppercase bg-brand-500 text-zinc-100 text-center">
                 <tr>
                   <th scope="col" className="px-6 py-3">
@@ -171,12 +171,23 @@ export default function Modal({ setModal }: ModalProps) {
             </div>
           )}
         </div>
-        <button
-          className="self-center p-2 w-1/2 mt-4 bg-brand-500 rounded-md border-transparent flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
-          onClick={() => setModal(false)}
-        >
-          Fechar
-        </button>
+        <div className="w-full flex gap-4">
+          <button
+            className="self-center p-2 w-1/2 mt-4 bg-brand-500 rounded-md border-transparent flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
+            onClick={() => setModal(false)}
+          >
+            Fechar
+          </button>
+          <button
+            className="self-center p-2 w-1/2 mt-4 bg-brand-500 rounded-md border-transparent flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
+            onClick={() => {
+              logout();
+              setModal(false);
+            }}
+          >
+            Logout
+          </button>
+        </div>
       </motion.div>
     </Backdrop>
   );

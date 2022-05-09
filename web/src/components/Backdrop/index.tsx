@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 export default function Backdrop({ children }: any) {
   return (
@@ -8,7 +8,7 @@ export default function Backdrop({ children }: any) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      { children }
+      {children}
     </motion.div>
-  )
+  );
 }

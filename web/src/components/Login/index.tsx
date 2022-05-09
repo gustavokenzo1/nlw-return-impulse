@@ -2,7 +2,6 @@ import { ArrowLeft } from "phosphor-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/auth";
-import { api } from "../../libs/api";
 import { CloseButton } from "../CloseButton";
 import { Loading } from "../WidgetForm/Loading";
 

@@ -71,7 +71,7 @@ export function WidgetForm({ setModal }: ModalProps) {
     <motion.div
       initial={{ opacity: 0, transform: "scale(0.5)" }}
       animate={{ opacity: 1, transform: "scale(1)" }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.2 }}
       key="feedback-form"
     >
       <div className="bg-white dark:bg-zinc-900 p-4 relative rounded-2xl mb-4 flex flex-col items-center shadow-lg w-[calc(100vw-2rem)] md:w-auto transition-all duration-200">
