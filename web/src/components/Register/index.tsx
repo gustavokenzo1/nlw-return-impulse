@@ -47,7 +47,10 @@ export function Register({ setRegister, setLogin }: Props) {
             setLogin(true);
           }}
         >
-          <ArrowLeft weight="bold" className="w-4 h-4 dark:hover:text-zinc-100 hover:text-zinc-800" />
+          <ArrowLeft
+            weight="bold"
+            className="w-4 h-4 dark:hover:text-zinc-100 hover:text-zinc-800"
+          />
         </button>
         <CloseButton />
       </header>
@@ -82,7 +85,7 @@ export function Register({ setRegister, setLogin }: Props) {
           autoComplete="off"
           {...register("password", { required: true })}
           type="password"
-          className="mb-2 min-w-[304px] w-full min-h-[30px] text-sm placeholder-zinc-400 text-zinc-100 border-zinc-600 bg-transparent rounded-md focus:border-brand-500 focus:ring-brand-500 focus:ring-1 resize-none focus:outline-none scrollbar-thumb-zinc-700 scrollbar-track-transparent scrollbar-thin"
+          className="mb-2 min-w-[304px] w-full min-h-[30px] text-sm placeholder-zinc-400 text-zinc-800 dark:text-zinc-100 border-zinc-600 bg-transparent rounded-md focus:border-brand-500 focus:ring-brand-500 focus:ring-1 resize-none focus:outline-none scrollbar-thumb-zinc-700 scrollbar-track-transparent scrollbar-thin"
         />
         <button
           type="submit"

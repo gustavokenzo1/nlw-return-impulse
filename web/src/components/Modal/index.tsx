@@ -10,7 +10,9 @@ import {
   MoonStars,
   Square,
   Sun,
+  ThumbsDown,
   ThumbsUp,
+  Trash,
   X,
 } from "phosphor-react";
 import useDarkMode from "../../hook/useDarkMode";
@@ -124,6 +126,7 @@ export default function Modal({ setModal }: ModalProps) {
   async function handleWasReviewed(id: string) {
     await api.patch(`/feedbacks/${id}`, {
       wasReviewed: true,
+      user_id: userData.id,
     });
     setShowFeedbacks(
       showFeedbacks.map((feedback) => {
@@ -141,6 +144,39 @@ export default function Modal({ setModal }: ModalProps) {
       setUsers(await response.data);
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async function handleUserPrivilege(id: string, isAdmin: boolean) {
+    try {
+      await api.patch(`/users/${id}`, {
+        isAdmin: !isAdmin,
+      });
+
+      setUsers(
+        users.map((user) => {
+          if (user.id === id) {
+            user.isAdmin = !user.isAdmin;
+          }
+          return user;
+        })
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function handleDeleteFeedback(id: string) {
+    try {
+      await api.delete(`/feedbacks/${id}`);
+
+      setShowFeedbacks(
+        showFeedbacks.filter((feedback) => {
+          return feedback.id !== id;
+        })
+      );
+    } catch (error) {
+      throw error;
     }
   }
 
@@ -233,11 +269,28 @@ export default function Modal({ setModal }: ModalProps) {
               </thead>
               <tbody className="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
                 {users.map((user) => (
-                  <tr key={user.id}>
+                  <tr
+                    key={user.id}
+                    className="border-b hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-all"
+                  >
                     <td className="px-6 py-3 text-center">{user.name}</td>
                     <td className="px-6 py-3 text-center">{user.email}</td>
-                    <td className="px-6 py-3 text-center">
-                      {user.isAdmin ? "Sim" : "Não"}
+                    <td className="px-6 py-5 flex justify-center items-center">
+                      {user.isAdmin ? (
+                        <ThumbsUp
+                          size={20}
+                          onClick={() => handleUserPrivilege(user.id, true)}
+                          className="cursor-pointer text-green-500"
+                          weight="bold"
+                        />
+                      ) : (
+                        <ThumbsDown
+                          size={20}
+                          onClick={() => handleUserPrivilege(user.id, false)}
+                          className="cursor-pointer text-red-500"
+                          weight="bold"
+                        />
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -318,7 +371,7 @@ export default function Modal({ setModal }: ModalProps) {
                             )}
                           </td>
                         ) : (
-                          <td className="px-6 py-3 flex justify-center items-center">
+                          <td className="px-6 py-3 flex justify-center items-center flex-col">
                             {feedback.wasReviewed === true ? (
                               <ThumbsUp
                                 size={24}
@@ -334,6 +387,11 @@ export default function Modal({ setModal }: ModalProps) {
                                 onClick={() => handleWasReviewed(feedback.id)}
                               />
                             )}
+                            <Trash
+                              size={24}
+                              className="cursor-pointer text-red-500 mt-4"
+                              onClick={() => handleDeleteFeedback(feedback.id)}
+                            />
                           </td>
                         )}
                       </tr>
@@ -341,7 +399,7 @@ export default function Modal({ setModal }: ModalProps) {
                   </tbody>
                 </table>
               ) : (
-                <h1 className="text-zinc-800 text-center">
+                <h1 className="text-zinc-800 dark:text-zinc-100 text-center">
                   {userData.isAdmin
                     ? "Nenhum feedback encontrado"
                     : "Você ainda não deixou nenhum feedback :/"}
