@@ -9,6 +9,14 @@ export class UpdateFeedbackUseCase {
   ) {}
 
   async execute(id: string, data: any) {
+    if (!id) {
+      throw new Error("Id is required");
+    }
+
+    if (!data) {
+      throw new Error("Data is required");
+    }
+    
     try {
       const feedback = await prisma.feedback.findFirst({
         where: {

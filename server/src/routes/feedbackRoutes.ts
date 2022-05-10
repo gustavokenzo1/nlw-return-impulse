@@ -10,6 +10,7 @@ import { SubmitFeedbackUseCase } from "../use-cases/feedbacks-use-cases/submit-f
 import { UpdateFeedbackUseCase } from "../use-cases/feedbacks-use-cases/update-feedback-use-case";
 
 const feedbackRoutes = require("express").Router();
+const prismaFeedbacksRepository = new PrismaFeedbacksRepository();
 
 feedbackRoutes.post("/", async (req: Request, res: Response) => {
   const { type, comment, screenshot, user } = req.body;
@@ -18,7 +19,6 @@ feedbackRoutes.post("/", async (req: Request, res: Response) => {
     return res.status(400).send("Missing required fields");
   }
 
-  const prismaFeedbacksRepository = new PrismaFeedbacksRepository();
   const nodemailerMailAdapter = new NodemailerMailAdapter();
 
   const submitFeedbackUseCase = new SubmitFeedbackUseCase(
@@ -43,8 +43,6 @@ feedbackRoutes.get("/:id", async (req: Request, res: Response) => {
     return res.status(400).send("Missing required fields");
   }
 
-  const prismaFeedbacksRepository = new PrismaFeedbacksRepository();
-
   const readFeedbackUseCase = new ReadFeedbackUseCase(
     prismaFeedbacksRepository
   );
@@ -66,7 +64,6 @@ feedbackRoutes.patch("/:id", async (req: Request, res: Response) => {
     return res.status(400).send("Missing required fields");
   }
 
-  const prismaFeedbacksRepository = new PrismaFeedbacksRepository();
   const nodemailerMailAdapter = new NodemailerMailAdapter();
 
   const updateFeedbackUseCase = new UpdateFeedbackUseCase(
@@ -90,8 +87,6 @@ feedbackRoutes.delete("/:id", async (req: Request, res: Response) => {
     return res.status(400).send("Missing required fields");
   }
 
-  const prismaFeedbacksRepository = new PrismaFeedbacksRepository();
-
   const deleteFeedbackUseCase = new DeleteFeedbackUseCase(
     prismaFeedbacksRepository
   );
@@ -106,8 +101,6 @@ feedbackRoutes.delete("/:id", async (req: Request, res: Response) => {
 });
 
 feedbackRoutes.get("/", async (req: Request, res: Response) => {
-  const prismaFeedbacksRepository = new PrismaFeedbacksRepository();
-
   const readAllFeedbackUseCase = new ReadAllFeedbacksUseCase(
     prismaFeedbacksRepository
   );
