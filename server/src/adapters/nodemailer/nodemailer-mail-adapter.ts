@@ -18,10 +18,10 @@ const transport = nodemailer.createTransport({
 });
 
 export class NodemailerMailAdapter implements MailAdapter {
-  async sendMail({ subject, body }: SendMailData) {
+  async sendMail({ subject, body, user_email }: SendMailData) {
     await transport.sendMail({
       from: "Equipe FeedGet <feedget.impulse@gmail.com>",
-      to: ["feedget.impulse@gmail.com"],
+      to: user_email ? [process.env.EMAIL!, user_email] : process.env.EMAIL,
       subject: subject,
       html: body,
     });

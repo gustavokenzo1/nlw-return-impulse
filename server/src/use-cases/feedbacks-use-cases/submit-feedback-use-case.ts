@@ -1,4 +1,5 @@
 import { MailAdapter } from "../../adapters/mail-adapter";
+import { prisma } from "../../prisma";
 import { FeedbacksRepository } from "../../repositories/feedbacks-repository";
 
 export interface SubmitFeedbackUseCaseRequest {
@@ -30,18 +31,31 @@ export class SubmitFeedbackUseCase {
     }
 
     await this.feedbacksRepository.create({ type, comment, screenshot, user });
+    let userInfo;
+
+    if (user) {
+      userInfo = await prisma.user.findFirst({
+        where: {
+          id: user,
+        },
+      });
+    }
 
     await this.mailAdapter.sendMail({
       subject: "Feedback do usuário",
       body: [
-        `<div style="width: 100%; font-family: sans-serif; font-size: 16px; color: #111" display: flex; flex-direction: column; text-align: center; justify-content: center; align-items: center>`,
-        `<h1 style="font-size: 24px; font-weight: bold; margin-bottom: 16px; color: #8257e6">Novo Feedback!</h1>`,
-        `<p style="font-size: 16px; margin-bottom: 16px;">`,
-        `<strong>Tipo:</strong> ${type}<br>`,
-        `<strong>Comentário:</strong> ${comment}<br>`,
-        screenshot ? `Para ver a imagem, abra o Painel de Administrador` : ``,
+        `<body style="background-color: #8257e6; padding: 50px; border-radius: 10px; color: #ffffff">`,
+        `<div style="text-align: center;">`,
+        `<h1 style="font-size: 24px; font-weight: bold; margin-bottom: 50px;">Novo Feedback Recebido!</h1>`,
+        `<h2><strong>Tipo:</strong> ${type}</h2>`,
+        `<h2><strong>Comentário:</strong> ${comment}</h2>`,
+        screenshot && `<h2>Visite o site para ver a foto</h2>`,
+        userInfo &&
+          `<h3>Olá ${userInfo.name}, obrigado pelo feedback! Você poderá (completar depois)</h3>`,
         `</div>`,
+        `</body>`,
       ].join("\n"),
+      user_email: userInfo ? userInfo.email : undefined,
     });
   }
 }

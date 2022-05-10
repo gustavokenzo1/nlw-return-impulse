@@ -36,6 +36,8 @@ export class PrismaFeedbacksRepository implements FeedbacksRepository {
 
   async update(id: string, data: object) {
     try {
+      (data as any).user_id = undefined;
+
       await prisma.feedback.update({
         where: {
           id,

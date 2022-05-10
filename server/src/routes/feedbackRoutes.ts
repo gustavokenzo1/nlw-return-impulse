@@ -67,9 +67,11 @@ feedbackRoutes.patch("/:id", async (req: Request, res: Response) => {
   }
 
   const prismaFeedbacksRepository = new PrismaFeedbacksRepository();
+  const nodemailerMailAdapter = new NodemailerMailAdapter();
 
   const updateFeedbackUseCase = new UpdateFeedbackUseCase(
-    prismaFeedbacksRepository
+    prismaFeedbacksRepository,
+    nodemailerMailAdapter
   );
 
   try {
