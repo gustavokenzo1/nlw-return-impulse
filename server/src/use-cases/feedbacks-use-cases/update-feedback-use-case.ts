@@ -10,9 +10,15 @@ export class UpdateFeedbackUseCase {
 
   async execute(id: string, data: any) {
     try {
+      const feedback = await prisma.feedback.findFirst({
+        where: {
+          id,
+        },
+      });
+
       const user = await prisma.user.findFirst({
         where: {
-          id: data.user_id,
+          id: (feedback as any).userId,
         },
       });
 

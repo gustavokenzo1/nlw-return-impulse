@@ -51,7 +51,7 @@ export class SubmitFeedbackUseCase {
         `<h2><strong>Comentário:</strong> ${comment}</h2>`,
         screenshot && `<h2>Visite o site para ver a foto</h2>`,
         userInfo &&
-          `<h3>Olá ${userInfo.name}, obrigado pelo feedback! Você poderá (completar depois)</h3>`,
+          `<h3>Olá ${userInfo.name}, obrigado pelo feedback! Você receberá um e-mail quando nossa equipe ler o seu feedback! Você também pode acompanhar o status do mesmo pelo seu painel no site!</h3>`,
         `</div>`,
         `</body>`,
       ].join("\n"),
