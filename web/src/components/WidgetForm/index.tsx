@@ -131,7 +131,16 @@ export function WidgetForm({ setModal }: ModalProps) {
               rel="noopener noreferrer"
               className="hover:text-zinc-300 transition-colors"
             >
-              Gustavo Kenzo
+              Gustavo Kenzo{" "}
+            </a>
+            no{" "}
+            <a
+              href="https://nextlevelweek.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-zinc-300 transition-colors"
+            >
+              NLW
             </a>
           </div>
           {colorTheme === "light" ? (

@@ -188,7 +188,7 @@ export default function Modal({ setModal }: ModalProps) {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
-            className="absolute z-10 w-3/4 h-auto border-brand-300 border-2 rounded-xl cursor-pointer flex items-center justify-center bg-zinc-900"
+            className="absolute z-10 w-1/2 h-auto border-brand-300 border-2 rounded-xl cursor-pointer flex items-center justify-center bg-zinc-900"
             onClick={() => setScreenshot("")}
           >
             <img
@@ -342,7 +342,7 @@ export default function Modal({ setModal }: ModalProps) {
                               <img
                                 src={feedback.screenshot}
                                 alt="screenshot"
-                                className="hover:opacity-50 opacity-75 w-1/2 transition-all"
+                                className="hover:opacity-50 opacity-75 w-1/2 max-h-20 transition-all"
                               />
                               <div className="absolute">
                                 <MagnifyingGlassPlus size={18} />

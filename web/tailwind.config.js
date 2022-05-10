@@ -12,6 +12,9 @@ module.exports = {
       borderRadius: {
         md: "4px",
       },
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
+      },
     },
   },
   plugins: [require("@tailwindcss/forms"), require("tailwind-scrollbar")],

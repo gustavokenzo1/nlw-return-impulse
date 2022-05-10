@@ -1,9 +1,9 @@
 import { AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Landing from "./components/Landing";
 import Modal from "./components/Modal";
-import Warning from "./components/Warning";
 import { Widget } from "./components/Widget";
-import AuthProvider, { useAuth } from "./context/auth";
+import AuthProvider from "./context/auth";
 
 export function App() {
   const [modal, setModal] = useState(false);
@@ -11,7 +11,7 @@ export function App() {
   return (
     <AuthProvider>
       <div className="flex justify-center items-center h-screen">
-        <Warning />
+        <Landing />
         <AnimatePresence exitBeforeEnter>
           {modal && <Modal setModal={setModal} modal={modal} />}
         </AnimatePresence>

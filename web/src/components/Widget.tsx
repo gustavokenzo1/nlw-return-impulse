@@ -5,7 +5,7 @@ import { ModalProps } from "./Modal";
 
 export function Widget({ setModal, modal }: ModalProps) {
   return (
-    <Popover className="absolute bottom-4 right-4 md:bottom-8 md:right-8 flex flex-col items-end">
+    <Popover className="fixed bottom-4 right-4 md:bottom-8 md:right-8 flex flex-col items-end">
       <Popover.Panel>
         {!modal && <WidgetForm setModal={setModal} modal={modal} />}
       </Popover.Panel>
