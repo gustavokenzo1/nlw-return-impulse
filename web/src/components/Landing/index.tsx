@@ -2,10 +2,13 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import {
+  ArrowsLeftRight,
   ChatTeardropDots,
   Envelope,
   GithubLogo,
   LinkedinLogo,
+  MoonStars,
+  Sun,
 } from "phosphor-react";
 
 import home from "../../assets/home.png";
@@ -48,7 +51,11 @@ export default function Landing() {
         data-aos="fade-up"
       >
         <div className="p-2" data-aos="fade-up">
-          <img src={home} alt="home" className="w-100 h-auto" />
+          <img
+            src={home}
+            alt="home"
+            className="w-100 h-auto hover:-translate-y-5 transition-all duration-500"
+          />
           <h2 className="xl:text-2xl md:text-md sm:text-xs text-zinc-100 sm:mt-10 mt-2">
             1. Selecionar o tipo de feedback
           </h2>
@@ -57,7 +64,7 @@ export default function Landing() {
           <img
             src={problem}
             alt="problem"
-            className="w-100 object-scale-down h-auto"
+            className="w-100 h-auto hover:-translate-y-5 transition-all duration-500"
           />
           <h2 className="xl:text-2xl md:text-md sm:text-xs text-zinc-100 sm:mt-10 mt-2">
             2. Escrever o feedback
@@ -67,12 +74,20 @@ export default function Landing() {
           <img
             src={success}
             alt="success"
-            className="w-100 object-scale-down h-auto"
+            className="w-100 h-auto hover:-translate-y-5 transition-all duration-500"
           />
           <h2 className="xl:text-2xl md:text-md sm:text-xs text-zinc-100 sm:mt-10 mt-2">
             3. Enviar o feedback
           </h2>
         </div>
+      </div>
+      <h2 className="sm:text-2xl text-md text-zinc-100 sm:mt-20 mt-10 mb-10">
+        Fácil alternância entre temas claro e escuro, como toda aplicação deve ser em 2022
+      </h2>
+      <div className="flex gap-4 items-center mt-5">
+        <Sun size={24} />
+        <ArrowsLeftRight size={32} />
+        <MoonStars size={24} />
       </div>
       <h2 className="sm:text-2xl text-md text-zinc-100 sm:mt-20 mt-10">
         Permite a criação de contas para que os usuários possam acompanhar seus
@@ -126,13 +141,19 @@ export default function Landing() {
         criação do feedback, quanto na resolução do mesmo
       </h2>
       <div className="mt-10 mb-20 flex justify-between items-center flex-col">
-        <div className="p-4 flex flex-col justify-center items-center">
+        <div
+          className="p-4 flex flex-col justify-center items-center"
+          data-aos="fade-up"
+        >
           <img src={gmail1} alt="gmail1" className="w-3/4 h-auto rounded-xl" />
           <h2 className="xl:text-2xl md:text-md sm:text-xs text-zinc-100 mt-2">
             E-mail para a equipe
           </h2>
         </div>
-        <div className="p-4 flex flex-col justify-center items-center mt-10">
+        <div
+          className="p-4 flex flex-col justify-center items-center mt-10"
+          data-aos="fade-up"
+        >
           <img src={gmail2} alt="gmail2" className="w-3/4 h-auto rounded-xl" />
           <h2 className="xl:text-2xl md:text-md sm:text-xs text-zinc-100 mt-2">
             E-mail para o usuário

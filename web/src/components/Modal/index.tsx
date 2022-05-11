@@ -184,19 +184,23 @@ export default function Modal({ setModal }: ModalProps) {
     <Backdrop>
       <AnimatePresence exitBeforeEnter>
         {screenshot && (
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0 }}
-            className="absolute z-10 w-1/2 h-auto border-brand-300 border-2 rounded-xl cursor-pointer flex items-center justify-center bg-zinc-900"
+          <div
+            className="w-screen h-screen absolute z-10 flex items-center justify-center bg-opacity-75 bg-black"
             onClick={() => setScreenshot("")}
           >
-            <img
-              src={screenshot}
-              alt="screenshot"
-              className="w-full h-auto rounded-xl"
-            />
-          </motion.div>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0 }}
+              className="absolute z-10 h-almost-fuller border-brand-300 border-2 rounded-xl cursor-pointer flex items-center justify-center bg-zinc-900"
+            >
+              <img
+                src={screenshot}
+                alt="screenshot"
+                className="h-almost-full rounded-xl"
+              />
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
       <motion.div

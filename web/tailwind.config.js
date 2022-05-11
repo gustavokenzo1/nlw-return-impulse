@@ -15,6 +15,10 @@ module.exports = {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
       },
+      height: {
+        "almost-full": "90vh",
+        "almost-fuller": "91vh",
+      }
     },
   },
   plugins: [require("@tailwindcss/forms"), require("tailwind-scrollbar")],
