@@ -18,9 +18,8 @@ export function Register({ setRegister, setLogin }: Props) {
     setLoading(true);
     try {
       const response = await api.post("/users", data);
-      console.log(response);
 
-      if (response.statusText === "Created") {
+      if (response.status === 201) {
         setLoading(false);
         setLogin(true);
         setRegister(false);
