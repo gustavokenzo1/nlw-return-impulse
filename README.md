@@ -38,6 +38,7 @@ Techs:
 
 # Next Level
 ## Features extras:
+- Adicionada Landing Page descrevendo o projeto
 - CRUD de Feedback
 - CRUD de Usuário (com login)
 - Tema light e dark
