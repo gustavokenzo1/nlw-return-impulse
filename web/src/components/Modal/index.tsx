@@ -16,6 +16,7 @@ import {
   X,
 } from "phosphor-react";
 import useDarkMode from "../../hook/useDarkMode";
+import { Loading } from "../WidgetForm/Loading";
 
 export interface ModalProps {
   setModal: (modal: boolean) => void;
@@ -68,6 +69,8 @@ export default function Modal({ setModal }: ModalProps) {
   const [screenshot, setScreenshot] = useState<string>("");
   const [feedbackType, setFeedbackType] = useState<string>("");
   const [users, setUsers] = useState<UserProps[]>([]);
+  const [feedbacksLoading, setFeedbacksLoading] = useState(false);
+  const [userLoading, setUserLoading] = useState(false);
 
   const { user, logout } = useAuth();
   const [userData, setUserData] = useState(user as UserProps);
@@ -81,6 +84,7 @@ export default function Modal({ setModal }: ModalProps) {
 
     async function getFeedbacks() {
       if (userData) {
+        setFeedbacksLoading(true);
         let response;
 
         if (userData.isAdmin) {
@@ -94,6 +98,7 @@ export default function Modal({ setModal }: ModalProps) {
         }
         setShowFeedbacks(await response.data);
         setFeedbacks(await response.data);
+        setFeedbacksLoading(false);
       }
     }
 
@@ -139,6 +144,7 @@ export default function Modal({ setModal }: ModalProps) {
   }
 
   async function handleGetUsers() {
+    setUserLoading(true);
     try {
       const response = await api.get("/users", {
         headers: {
@@ -146,8 +152,10 @@ export default function Modal({ setModal }: ModalProps) {
         },
       });
       setUsers(await response.data);
+      setUserLoading(false);
     } catch (error) {
       console.log(error);
+      setUserLoading(false);
     }
   }
 
@@ -261,157 +269,175 @@ export default function Modal({ setModal }: ModalProps) {
         )}
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full scrollbar-thumb-zinc-700 scrollbar-track-transparent scrollbar-thin">
           {users.length > 0 ? (
-            <table className="mt-2 w-full text-sm text-left text-zinc-800 dark:text-zinc-200">
-              <thead className="text-xs uppercase bg-brand-500 text-zinc-100 text-center">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    Nome
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Email
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Administrador
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
-                {users.map((user) => (
-                  <tr
-                    key={user.id}
-                    className="border-b hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-all"
-                  >
-                    <td className="px-6 py-3 text-center">{user.name}</td>
-                    <td className="px-6 py-3 text-center">{user.email}</td>
-                    <td className="px-6 py-5 flex justify-center items-center">
-                      {user.isAdmin ? (
-                        <ThumbsUp
-                          size={20}
-                          onClick={() => handleUserPrivilege(user.id, true)}
-                          className="cursor-pointer text-green-500"
-                          weight="bold"
-                        />
-                      ) : (
-                        <ThumbsDown
-                          size={20}
-                          onClick={() => handleUserPrivilege(user.id, false)}
-                          className="cursor-pointer text-red-500"
-                          weight="bold"
-                        />
-                      )}
-                    </td>
+            userLoading ? (
+              <div className="flex w-full items-center justify-center">
+                <Loading />
+              </div>
+            ) : (
+              <table className="mt-2 w-full text-sm text-left text-zinc-800 dark:text-zinc-200">
+                <thead className="text-xs uppercase bg-brand-500 text-zinc-100 text-center">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      Nome
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Email
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Administrador
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
+                  {users.map((user) => (
+                    <tr
+                      key={user.id}
+                      className="border-b hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-all"
+                    >
+                      <td className="px-6 py-3 text-center">{user.name}</td>
+                      <td className="px-6 py-3 text-center">{user.email}</td>
+                      <td className="px-6 py-5 flex justify-center items-center">
+                        {user.isAdmin ? (
+                          <ThumbsUp
+                            size={20}
+                            onClick={() => handleUserPrivilege(user.id, true)}
+                            className="cursor-pointer text-green-500"
+                            weight="bold"
+                          />
+                        ) : (
+                          <ThumbsDown
+                            size={20}
+                            onClick={() => handleUserPrivilege(user.id, false)}
+                            className="cursor-pointer text-red-500"
+                            weight="bold"
+                          />
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )
           ) : (
             <>
-              {showFeedbacks.length > 0 ? (
-                <table className="mt-2 w-full text-sm text-left text-zinc-800 dark:text-zinc-200">
-                  <thead className="text-xs uppercase bg-brand-500 text-zinc-100 text-center">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">
-                        Tipo
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Feedback
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Screenshot
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Data
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Status
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
-                    {showFeedbacks.map((feedback) => (
-                      <tr
-                        key={feedback.id}
-                        className="border-b hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-all"
-                      >
-                        <td className="text-center px-6 py-3">
-                          {feedback.type}
-                        </td>
-                        <td className="text-center px-6 py-3">
-                          {feedback.comment}
-                        </td>
-                        <td className="px-6 py-3 text-center">
-                          {feedback.screenshot ? (
-                            <div
-                              className="flex justify-center items-center cursor-pointer"
-                              onClick={() =>
-                                showScreenshot(feedback.screenshot)
-                              }
-                            >
-                              <img
-                                src={feedback.screenshot}
-                                alt="screenshot"
-                                className="hover:opacity-50 opacity-75 w-1/2 max-h-20 transition-all"
-                              />
-                              <div className="absolute">
-                                <MagnifyingGlassPlus size={18} />
-                              </div>
-                            </div>
-                          ) : (
-                            "Nenhuma foto"
-                          )}
-                        </td>
-                        <td className="text-center px-6 py-3">
-                          {new Date(feedback.createdAt).toLocaleDateString(
-                            "pt-BR",
-                            {
-                              day: "numeric",
-                              month: "long",
-                              year: "numeric",
-                            }
-                          )}
-                        </td>
-                        {!userData.isAdmin ? (
-                          <td className="px-6 py-3 flex justify-center items-center">
-                            {feedback.wasReviewed === true ? (
-                              <Checks size={24} color="#8257e6" />
-                            ) : (
-                              <Clock size={24} />
-                            )}
-                          </td>
-                        ) : (
-                          <td className="px-6 py-3 flex justify-center items-center flex-col">
-                            {feedback.wasReviewed === true ? (
-                              <ThumbsUp
-                                size={24}
-                                weight="fill"
-                                color="#8257e6"
-                                className="cursor-pointer"
-                              />
-                            ) : (
-                              <ThumbsUp
-                                size={24}
-                                className="cursor-pointer"
-                                color="#8257e6"
-                                onClick={() => handleWasReviewed(feedback.id)}
-                              />
-                            )}
-                            <Trash
-                              size={24}
-                              className="cursor-pointer text-red-500 mt-4"
-                              onClick={() => handleDeleteFeedback(feedback.id)}
-                            />
-                          </td>
-                        )}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              {feedbacksLoading ? (
+                <div className="flex w-full items-center justify-center">
+                  <Loading />
+                </div>
               ) : (
-                <h1 className="text-zinc-800 dark:text-zinc-100 text-center">
-                  {userData.isAdmin
-                    ? "Nenhum feedback encontrado"
-                    : "Você ainda não deixou nenhum feedback :/"}
-                </h1>
+                <>
+                  {showFeedbacks.length > 0 ? (
+                    <table className="mt-2 w-full text-sm text-left text-zinc-800 dark:text-zinc-200">
+                      <thead className="text-xs uppercase bg-brand-500 text-zinc-100 text-center">
+                        <tr>
+                          <th scope="col" className="px-6 py-3">
+                            Tipo
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                            Feedback
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                            Screenshot
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                            Data
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                            Status
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
+                        {showFeedbacks.map((feedback) => (
+                          <tr
+                            key={feedback.id}
+                            className="border-b hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-all"
+                          >
+                            <td className="text-center px-6 py-3">
+                              {feedback.type}
+                            </td>
+                            <td className="text-center px-6 py-3">
+                              {feedback.comment}
+                            </td>
+                            <td className="px-6 py-3 text-center">
+                              {feedback.screenshot ? (
+                                <div
+                                  className="flex justify-center items-center cursor-pointer"
+                                  onClick={() =>
+                                    showScreenshot(feedback.screenshot)
+                                  }
+                                >
+                                  <img
+                                    src={feedback.screenshot}
+                                    alt="screenshot"
+                                    className="hover:opacity-50 opacity-75 w-1/2 max-h-20 transition-all"
+                                  />
+                                  <div className="absolute">
+                                    <MagnifyingGlassPlus size={18} />
+                                  </div>
+                                </div>
+                              ) : (
+                                "Nenhuma foto"
+                              )}
+                            </td>
+                            <td className="text-center px-6 py-3">
+                              {new Date(feedback.createdAt).toLocaleDateString(
+                                "pt-BR",
+                                {
+                                  day: "numeric",
+                                  month: "long",
+                                  year: "numeric",
+                                }
+                              )}
+                            </td>
+                            {!userData.isAdmin ? (
+                              <td className="px-6 py-3 flex justify-center items-center">
+                                {feedback.wasReviewed === true ? (
+                                  <Checks size={24} color="#8257e6" />
+                                ) : (
+                                  <Clock size={24} />
+                                )}
+                              </td>
+                            ) : (
+                              <td className="px-6 py-3 flex justify-center items-center flex-col">
+                                {feedback.wasReviewed === true ? (
+                                  <ThumbsUp
+                                    size={24}
+                                    weight="fill"
+                                    color="#8257e6"
+                                    className="cursor-pointer"
+                                  />
+                                ) : (
+                                  <ThumbsUp
+                                    size={24}
+                                    className="cursor-pointer"
+                                    color="#8257e6"
+                                    onClick={() =>
+                                      handleWasReviewed(feedback.id)
+                                    }
+                                  />
+                                )}
+                                <Trash
+                                  size={24}
+                                  className="cursor-pointer text-red-500 mt-4"
+                                  onClick={() =>
+                                    handleDeleteFeedback(feedback.id)
+                                  }
+                                />
+                              </td>
+                            )}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <h1 className="text-zinc-800 dark:text-zinc-100 text-center">
+                      {userData.isAdmin
+                        ? "Nenhum feedback encontrado"
+                        : "Você ainda não deixou nenhum feedback :/"}
+                    </h1>
+                  )}
+                </>
               )}
             </>
           )}
