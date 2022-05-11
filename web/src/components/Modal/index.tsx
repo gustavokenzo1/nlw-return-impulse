@@ -140,7 +140,11 @@ export default function Modal({ setModal }: ModalProps) {
 
   async function handleGetUsers() {
     try {
-      const response = await api.get("/users");
+      const response = await api.get("/users", {
+        headers: {
+          userId: userData.id,
+        },
+      });
       setUsers(await response.data);
     } catch (error) {
       console.log(error);
