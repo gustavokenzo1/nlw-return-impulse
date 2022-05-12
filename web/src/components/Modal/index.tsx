@@ -224,26 +224,26 @@ export default function Modal({ setModal }: ModalProps) {
       >
         <div className="flex w-full justify-between items-center mb-4">
           {colorTheme === "light" ? (
-            <Sun
-              size={24}
-              className="cursor-pointer text-neutral-400"
-              onClick={handleDarkModeToggle}
-            />
+            <button onClick={handleDarkModeToggle}>
+              <Sun size={24} className="cursor-pointer text-neutral-400" />
+            </button>
           ) : (
-            <MoonStars
-              size={24}
-              className="cursor-pointer text-neutral-400"
-              onClick={handleDarkModeToggle}
-            />
+            <button onClick={handleDarkModeToggle}>
+              <MoonStars
+                size={24}
+                className="cursor-pointer text-neutral-400"
+              />
+            </button>
           )}
           <h1 className="text-zinc-800 dark:text-zinc-100">
             {userData.isAdmin ? "Painel de Administrador" : "Seus feedbacks"}
           </h1>
-          <X
-            weight="bold"
-            className="w-4 h-4 cursor-pointer text-neutral-400"
-            onClick={() => setModal(false)}
-          />
+          <button onClick={() => setModal(false)}>
+            <X
+              weight="bold"
+              className="w-4 h-4 cursor-pointer text-neutral-400"
+            />
+          </button>
         </div>
         {userData.isAdmin && (
           <div className="mb-4 flex w-full justify-between">
@@ -298,19 +298,25 @@ export default function Modal({ setModal }: ModalProps) {
                       <td className="px-6 py-3 text-center">{user.email}</td>
                       <td className="px-6 py-5 flex justify-center items-center">
                         {user.isAdmin ? (
-                          <ThumbsUp
-                            size={20}
+                          <button
                             onClick={() => handleUserPrivilege(user.id, true)}
-                            className="cursor-pointer text-green-500"
-                            weight="bold"
-                          />
+                          >
+                            <ThumbsUp
+                              size={20}
+                              className="cursor-pointer text-green-500"
+                              weight="bold"
+                            />
+                          </button>
                         ) : (
-                          <ThumbsDown
-                            size={20}
+                          <button
                             onClick={() => handleUserPrivilege(user.id, false)}
-                            className="cursor-pointer text-red-500"
-                            weight="bold"
-                          />
+                          >
+                            <ThumbsDown
+                              size={20}
+                              className="cursor-pointer text-red-500"
+                              weight="bold"
+                            />
+                          </button>
                         )}
                       </td>
                     </tr>
@@ -408,22 +414,26 @@ export default function Modal({ setModal }: ModalProps) {
                                     className="cursor-pointer"
                                   />
                                 ) : (
-                                  <ThumbsUp
-                                    size={24}
-                                    className="cursor-pointer"
-                                    color="#8257e6"
+                                  <button
                                     onClick={() =>
                                       handleWasReviewed(feedback.id)
                                     }
-                                  />
+                                  >
+                                    <ThumbsUp
+                                      size={24}
+                                      className="cursor-pointer"
+                                      color="#8257e6"
+                                    />
+                                  </button>
                                 )}
-                                <Trash
-                                  size={24}
-                                  className="cursor-pointer text-red-500 mt-4"
+                                <button
                                   onClick={() =>
                                     handleDeleteFeedback(feedback.id)
                                   }
-                                />
+                                  className="cursor-pointer text-red-500 mt-4"
+                                >
+                                  <Trash size={24} />
+                                </button>
                               </td>
                             )}
                           </tr>

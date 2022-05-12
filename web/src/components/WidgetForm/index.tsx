@@ -144,17 +144,13 @@ export function WidgetForm({ setModal }: ModalProps) {
             </a>
           </div>
           {colorTheme === "light" ? (
-            <Sun
-              size={24}
-              className="cursor-pointer"
-              onClick={handleDarkModeToggle}
-            />
+            <button onClick={handleDarkModeToggle}>
+              <Sun size={24} className="cursor-pointer" />
+            </button>
           ) : (
-            <MoonStars
-              size={24}
-              className="cursor-pointer"
-              onClick={handleDarkModeToggle}
-            />
+            <button onClick={handleDarkModeToggle}>
+              <MoonStars size={24} className="cursor-pointer" />
+            </button>
           )}
         </footer>
       </div>
