@@ -107,7 +107,7 @@ feedbackRoutes.get("/", async (req: Request, res: Response) => {
   );
 
   const userId = req.headers.userid;
-  const { apiKey } = req.body;
+  const apiKey = req.headers.apikey;
 
   if (!userId || !apiKey) {
     return res.status(400).send("Missing required fields");
@@ -121,7 +121,7 @@ feedbackRoutes.get("/", async (req: Request, res: Response) => {
 
   if (user!.isAdmin) {
     try {
-      const feedbacks = await readAllFeedbackUseCase.execute(apiKey);
+      const feedbacks = await readAllFeedbackUseCase.execute(apiKey as string);
 
       return res.status(200).json(feedbacks);
     } catch (error) {

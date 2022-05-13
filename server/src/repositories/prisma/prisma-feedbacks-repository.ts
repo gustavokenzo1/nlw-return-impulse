@@ -19,6 +19,10 @@ export class PrismaFeedbacksRepository implements FeedbacksRepository {
         },
       });
 
+      if (!organizationExists) {
+        throw new Error("Organization does not exist");
+      }
+
       await prisma.feedback.create({
         data: {
           type,

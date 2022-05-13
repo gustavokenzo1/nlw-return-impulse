@@ -29,8 +29,21 @@ export class CreateOrganizationUseCase {
         email,
       },
     });
+    
+    function makeid(length: number) {
+      let result = "";
+      const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      const charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        );
+      }
+      return result;
+    }
 
-    const hashedPassword = bcrypt.hashSync(email, 7);
+    const hashedPassword = makeid(10);
     if (!userExists) {
       await this.usersRepository.create({
         name: "Admin",

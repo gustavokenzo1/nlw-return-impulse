@@ -7,8 +7,21 @@ import {
 
 export class PrismaOrganizationsRepository implements OrganizationsRepository {
   async create({ email }: OrganizationCreateData) {
+    function makeid(length: number) {
+      let result = "";
+      const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      const charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        );
+      }
+      return result;
+    }
+
     if (email) {
-      const apiKey = bcrypt.hashSync(email, 15);
+      const apiKey = makeid(30);
 
       const organizationExists = await prisma.organization.count({
         where: {

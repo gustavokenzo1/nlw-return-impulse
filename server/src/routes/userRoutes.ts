@@ -41,7 +41,7 @@ userRoutes.get("/", async (req: Request, res: Response) => {
   const readUsersUseCase = new ReadUsersUseCase(prismaUsersRepository);
 
   const userId = req.headers.userid;
-  const { apiKey } = req.body;
+  const apiKey = req.headers.apikey;
 
   const user = await prisma.user.findFirst({
     where: {
