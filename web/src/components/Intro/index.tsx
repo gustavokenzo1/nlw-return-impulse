@@ -9,6 +9,8 @@ import gmail2 from "../../assets/gmail2.png";
 import menu from "../../assets/menu.png";
 import step from "../../assets/step.png";
 import final from "../../assets/final.png";
+import admin from "../../assets/admin.png";
+import user from "../../assets/user.png";
 
 export default function Intro({ children }: any) {
   const [colorTheme, setTheme] = useDarkMode();
@@ -141,19 +143,28 @@ export default function Intro({ children }: any) {
         </h1>
         <div className="w-3/4 flex items-center justify-around flex-col lg:flex-row">
           <div className="m-5" data-aos="fade-up">
-            <img src={menu} className="rounded-xl hover:-translate-y-5 transition-all duration-300" />
+            <img
+              src={menu}
+              className="rounded-xl hover:-translate-y-5 transition-all duration-300 shadow-2xl"
+            />
             <h1 className="text-base text-center md:text-xl lg:text-xl mt-5">
               1. Escolher um tipo de feedback
             </h1>
           </div>
           <div className="m-5" data-aos="fade-up" data-aos-delay="500">
-            <img src={step} className="rounded-xl hover:-translate-y-5 transition-all duration-300" />
+            <img
+              src={step}
+              className="rounded-xl hover:-translate-y-5 transition-all duration-300 shadow-2xl"
+            />
             <h1 className="text-base md:text-xl text-center lg:text-xl mt-5">
               2. Escrever o feedback
             </h1>
           </div>
           <div className="m-5" data-aos="fade-up" data-aos-delay="1000">
-            <img src={final} className="rounded-xl hover:-translate-y-5 transition-all duration-300" />
+            <img
+              src={final}
+              className="rounded-xl hover:-translate-y-5 transition-all duration-300 shadow-2xl"
+            />
             <h1 className="text-base md:text-xl text-center lg:text-xl mt-5">
               3. Enviar o feedback
             </h1>
@@ -195,6 +206,30 @@ export default function Intro({ children }: any) {
               data-aos="fade-right"
             />
           </div>
+        </div>
+      </div>
+      <div className="w-full p-2 flex mt-32 lg:mt-0 mb-32 text-zinc-800 dark:text-zinc-100 items-center justify-center">
+        <div className="flex flex-col items-center">
+          <h1 className="text-base md:text-xl lg:text-2xl mb-32">
+            Deixe tanto o administrador, quanto os usuários, acompanharem os
+            Feedbacks
+          </h1>
+          <h1 className="text-base md:text-xl lg:text-2xl mb-10">
+            Painel de Usuário:
+          </h1>
+          <img
+            src={user}
+            className="lg:w-3/4 rounded-xl shadow-2xl"
+            data-aos="zoom-in"
+          />
+          <h1 className="text-base md:text-xl lg:text-2xl mb-10 mt-32">
+            Painel de Administrador:
+          </h1>
+          <img
+            src={admin}
+            className="lg:w-3/4 rounded-xl shadow-2xl"
+            data-aos="zoom-in"
+          />
         </div>
       </div>
     </>

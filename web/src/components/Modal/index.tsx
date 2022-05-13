@@ -261,7 +261,7 @@ export default function Modal({ setModal }: ModalProps) {
             </select>
             <button
               onClick={handleGetUsers}
-              className="p-2 w-1/5 mt-4 bg-brand-500 rounded-md border-transparent flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
+              className="text-zinc-100 p-2 w-1/5 mt-4 bg-brand-500 rounded-md border-transparent flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
             >
               Ver usuários
             </button>
@@ -379,7 +379,7 @@ export default function Modal({ setModal }: ModalProps) {
                                     className="hover:opacity-50 opacity-75 w-1/2 max-h-20 transition-all"
                                   />
                                   <div className="absolute">
-                                    <MagnifyingGlassPlus size={18} />
+                                    <MagnifyingGlassPlus size={18} color="#fff" />
                                   </div>
                                 </div>
                               ) : (
@@ -454,7 +454,7 @@ export default function Modal({ setModal }: ModalProps) {
         </div>
         <div className="w-full flex justify-center">
           <button
-            className="p-2 w-1/2 mt-4 bg-brand-500 rounded-md border-transparent flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
+            className="text-zinc-100 p-2 w-1/2 mt-4 bg-brand-500 rounded-md border-transparent flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
             onClick={() => {
               logout();
               setModal(false);
