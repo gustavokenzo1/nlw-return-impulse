@@ -6,6 +6,9 @@ import useDarkMode from "../../hook/useDarkMode";
 import { EnvelopeSimple, MoonStars, Sun } from "phosphor-react";
 import gmail1 from "../../assets/gmail1.png";
 import gmail2 from "../../assets/gmail2.png";
+import menu from "../../assets/menu.png";
+import step from "../../assets/step.png";
+import final from "../../assets/final.png";
 
 export default function Intro({ children }: any) {
   const [colorTheme, setTheme] = useDarkMode();
@@ -37,14 +40,14 @@ export default function Intro({ children }: any) {
               className="h-1/3 w-3/4 flex flex-col justify-around"
               data-aos="fade-up"
             >
-              <h1 className="text-5xl font-medium text-brand-500 flex items-center">
+              <h1 className="text-6xl font-medium text-brand-500 flex items-center">
                 FeedGet{" "}
                 {colorTheme === "light" ? (
-                  <button onClick={handleDarkModeToggle}>
+                  <button className="w-0" onClick={handleDarkModeToggle}>
                     <Sun size={32} className="cursor-pointer ml-4" />
                   </button>
                 ) : (
-                  <button onClick={handleDarkModeToggle}>
+                  <button className="w-0" onClick={handleDarkModeToggle}>
                     <MoonStars size={32} className="cursor-pointer ml-4" />
                   </button>
                 )}
@@ -132,33 +135,65 @@ export default function Intro({ children }: any) {
           </div>
         </div>
       </div>
-      <div className="w-full p-2 flex mb-20 text-zinc-800 dark:text-zinc-100">
-        <div className="flex flex-col justify-around">
-          <div className="self-center flex flex-row h-1/3 mt-10 items-center w-3/4 gap-4">
-            <div className="flex flex-col">
-              <h1 className="text-2xl">
-                Quando um Feedback é enviado, um e-mail também é enviado
-                automaticamente.
-              </h1>
-              <h1 className="text-2xl mt-10">
-                Caso o usuário esteja logado, um e-mail também será enviado para
-                ele.
-              </h1>
-            </div>
-            <img src={gmail1} className="w-1/2 rounded-xl" />
+      <div className="w-full h-screen p-2 flex items-center flex-col justify-center mt-36 lg:mt-0 mb-36 text-zinc-800 dark:text-zinc-100">
+        <h1 className="text-base md:text-xl lg:text-2xl mb-32">
+          Apenas 3 simples passos:
+        </h1>
+        <div className="w-3/4 flex items-center justify-around flex-col lg:flex-row">
+          <div className="m-5" data-aos="fade-up">
+            <img src={menu} className="rounded-xl hover:-translate-y-5 transition-all duration-300" />
+            <h1 className="text-base text-center md:text-xl lg:text-xl mt-5">
+              1. Escolher um tipo de feedback
+            </h1>
           </div>
-          <div className="self-center flex flex-row-reverse h-1/3 mt-10 items-center w-3/4 gap-4">
+          <div className="m-5" data-aos="fade-up" data-aos-delay="500">
+            <img src={step} className="rounded-xl hover:-translate-y-5 transition-all duration-300" />
+            <h1 className="text-base md:text-xl text-center lg:text-xl mt-5">
+              2. Escrever o feedback
+            </h1>
+          </div>
+          <div className="m-5" data-aos="fade-up" data-aos-delay="1000">
+            <img src={final} className="rounded-xl hover:-translate-y-5 transition-all duration-300" />
+            <h1 className="text-base md:text-xl text-center lg:text-xl mt-5">
+              3. Enviar o feedback
+            </h1>
+          </div>
+        </div>
+      </div>
+      <div className="w-full p-2 flex mt-32 lg:mt-0 mb-32 text-zinc-800 dark:text-zinc-100">
+        <div className="flex flex-col justify-around">
+          <div className="self-center flex flex-col lg:flex-row h-1/3 mt-10 items-center w-3/4 gap-4">
             <div className="flex flex-col">
-              <h1 className="text-2xl">
+              <h1 className="text-base md:text-xl lg:text-2xl">
                 Quando um Feedback é enviado, um e-mail também é enviado
-                automaticamente.
+                automaticamente para o administrador.
               </h1>
-              <h1 className="text-2xl mt-10">
+              <h1 className="text-base md:text-xl lg:text-2xl mt-5 lg:mt-10">
                 Caso o usuário esteja logado, um e-mail também será enviado para
                 ele.
               </h1>
             </div>
-            <img src={gmail1} className="w-1/2 rounded-xl" />
+            <img
+              src={gmail1}
+              className="lg:w-1/2 rounded-xl shadow-2xl"
+              data-aos="fade-left"
+            />
+          </div>
+          <div className="self-center flex flex-col lg:flex-row-reverse h-1/3 mt-32 lg:mt-20 items-center w-3/4 gap-4">
+            <div className="flex flex-col">
+              <h1 className="text-base md:text-xl lg:text-2xl text-right">
+                Um administrador pode marcar um Feedback como lido.
+              </h1>
+              <h1 className="text-base md:text-xl lg:text-2xl mt-5 lg:mt-10 text-right">
+                Ao fazer isso, um e-mail será enviado para o usuário,
+                avisando-o.
+              </h1>
+            </div>
+            <img
+              src={gmail2}
+              className="lg:w-1/2 rounded-xl shadow-2xl"
+              data-aos="fade-right"
+            />
           </div>
         </div>
       </div>
