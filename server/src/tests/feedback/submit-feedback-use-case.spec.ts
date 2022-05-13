@@ -17,6 +17,7 @@ describe("Submit feedback", () => {
         comment: "example comment",
         screenshot: "data:image/png;base64,ad165f46adaf",
         user: "77498bd3-e174-4530-8dd0-4819e38efad7",
+        apiKey: "$2a$15$Pkmo8C770yYB//HlfP2gMuOX0ov1CAbqo84a3Py95oAh9KXyw8Zr.",
       })
     ).resolves.not.toThrow();
 
@@ -31,6 +32,7 @@ describe("Submit feedback", () => {
         comment: "example comment",
         screenshot: "data:image/png;base64,ad165f46adaf",
         user: "77498bd3-e174-4530-8dd0-4819e38efad7",
+        apiKey: "$2a$15$Pkmo8C770yYB//HlfP2gMuOX0ov1CAbqo84a3Py95oAh9KXyw8Zr.",
       })
     ).rejects.toThrow();
   });
@@ -42,6 +44,7 @@ describe("Submit feedback", () => {
         comment: "",
         screenshot: "data:image/png;base64,ad165f46adaf",
         user: "77498bd3-e174-4530-8dd0-4819e38efad7",
+        apiKey: "$2a$15$Pkmo8C770yYB//HlfP2gMuOX0ov1CAbqo84a3Py95oAh9KXyw8Zr.",
       })
     ).rejects.toThrow();
   });
@@ -53,6 +56,7 @@ describe("Submit feedback", () => {
         comment: "example comment",
         screenshot: "test.png",
         user: "77498bd3-e174-4530-8dd0-4819e38efad7",
+        apiKey: "$2a$15$Pkmo8C770yYB//HlfP2gMuOX0ov1CAbqo84a3Py95oAh9KXyw8Zr.",
       })
     ).rejects.toThrow();
   });
