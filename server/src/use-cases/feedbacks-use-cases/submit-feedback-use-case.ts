@@ -7,6 +7,7 @@ export interface SubmitFeedbackUseCaseRequest {
   comment: string;
   screenshot?: string;
   user: string;
+  apiKey: string;
 }
 
 export class SubmitFeedbackUseCase {
@@ -16,7 +17,7 @@ export class SubmitFeedbackUseCase {
   ) {}
 
   async execute(request: SubmitFeedbackUseCaseRequest) {
-    const { type, comment, screenshot, user } = request;
+    const { type, comment, screenshot, user, apiKey } = request;
 
     if (!type) {
       throw new Error("Type is required");
@@ -30,7 +31,13 @@ export class SubmitFeedbackUseCase {
       throw new Error("Invalid screenshot format");
     }
 
-    await this.feedbacksRepository.create({ type, comment, screenshot, user });
+    await this.feedbacksRepository.create({
+      type,
+      comment,
+      screenshot,
+      user,
+      apiKey,
+    });
     let userInfo;
 
     if (user) {

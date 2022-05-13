@@ -19,8 +19,10 @@ model Feedback {
   wasReviewed Boolean  @default(false)
   createdAt   DateTime @default(now())
 
-  user   User?   @relation(fields: [userId], references: [id])
-  userId String?
+  user           User?         @relation(fields: [userId], references: [id])
+  userId         String?
+  Organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
   @@map("feedbacks")
 }
 
@@ -33,5 +35,17 @@ model User {
   isAdmin   Boolean?
   feedbacks Feedback[]
 
+  Organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
   @@map("users")
+}
+
+model Organization {
+  id String @id @default(uuid())
+
+  apiKey    String
+  users     User[]
+  feedbacks Feedback[]
+
+  @@map("organizations")
 }

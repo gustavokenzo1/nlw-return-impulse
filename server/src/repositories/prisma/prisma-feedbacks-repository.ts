@@ -5,14 +5,27 @@ import {
 } from "../feedbacks-repository";
 
 export class PrismaFeedbacksRepository implements FeedbacksRepository {
-  async create({ type, comment, screenshot, user }: FeedbackCreateData) {
+  async create({
+    type,
+    comment,
+    screenshot,
+    user,
+    apiKey,
+  }: FeedbackCreateData) {
     try {
+      const organizationExists = await prisma.organization.findFirst({
+        where: {
+          apiKey,
+        },
+      });
+
       await prisma.feedback.create({
         data: {
           type,
           comment,
           screenshot,
           userId: user,
+          organizationId: organizationExists ? organizationExists.id : null,
         },
       });
     } catch (error) {
@@ -61,9 +74,19 @@ export class PrismaFeedbacksRepository implements FeedbacksRepository {
     }
   }
 
-  async readAll() {
+  async readAll(apiKey: string) {
     try {
-      const feedbacks = await prisma.feedback.findMany();
+      const organizationExists = await prisma.organization.findFirst({
+        where: {
+          apiKey,
+        },
+      });
+
+      const feedbacks = await prisma.feedback.findMany({
+        where: {
+          organizationId: organizationExists ? organizationExists.id : null,
+        },
+      });
       return feedbacks;
     } catch (error) {
       throw error;

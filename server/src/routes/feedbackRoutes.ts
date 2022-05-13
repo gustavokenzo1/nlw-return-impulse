@@ -13,9 +13,9 @@ const feedbackRoutes = require("express").Router();
 const prismaFeedbacksRepository = new PrismaFeedbacksRepository();
 
 feedbackRoutes.post("/", async (req: Request, res: Response) => {
-  const { type, comment, screenshot, user } = req.body;
+  const { type, comment, screenshot, user, apiKey } = req.body;
 
-  if (!type || !comment) {
+  if (!type || !comment || !apiKey) {
     return res.status(400).send("Missing required fields");
   }
 
@@ -31,6 +31,7 @@ feedbackRoutes.post("/", async (req: Request, res: Response) => {
     comment,
     screenshot,
     user,
+    apiKey,
   });
 
   return res.status(201).send();
@@ -106,6 +107,11 @@ feedbackRoutes.get("/", async (req: Request, res: Response) => {
   );
 
   const userId = req.headers.userid;
+  const { apiKey } = req.body;
+
+  if (!userId || !apiKey) {
+    return res.status(400).send("Missing required fields");
+  }
 
   const user = await prisma.user.findFirst({
     where: {
@@ -115,7 +121,7 @@ feedbackRoutes.get("/", async (req: Request, res: Response) => {
 
   if (user!.isAdmin) {
     try {
-      const feedbacks = await readAllFeedbackUseCase.execute();
+      const feedbacks = await readAllFeedbackUseCase.execute(apiKey);
 
       return res.status(200).json(feedbacks);
     } catch (error) {

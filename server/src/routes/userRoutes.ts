@@ -10,15 +10,15 @@ import { DeleteUserUseCase } from "../use-cases/user-use-cases/delete-user-use-c
 import { prisma } from "../prisma";
 
 const userRoutes = require("express").Router();
+const prismaUsersRepository = new PrismaUsersRepository();
 
 userRoutes.post("/", async (req: Request, res: Response) => {
-  const { name, email, password, isAdmin } = req.body;
+  const { name, email, password, isAdmin, apiKey } = req.body;
 
-  if (!name || !email || !password) {
+  if (!name || !email || !password || !apiKey) {
     return res.status(400).send("Missing required fields");
   }
 
-  const prismaUsersRepository = new PrismaUsersRepository();
   const createUserUseCase = new CreateUserUseCase(prismaUsersRepository);
 
   try {
@@ -28,6 +28,7 @@ userRoutes.post("/", async (req: Request, res: Response) => {
       password,
       isAdmin,
       feedback: [],
+      apiKey,
     });
 
     return res.status(201).send();
@@ -37,10 +38,10 @@ userRoutes.post("/", async (req: Request, res: Response) => {
 });
 
 userRoutes.get("/", async (req: Request, res: Response) => {
-  const prismaUsersRepository = new PrismaUsersRepository();
   const readUsersUseCase = new ReadUsersUseCase(prismaUsersRepository);
 
   const userId = req.headers.userid;
+  const { apiKey } = req.body;
 
   const user = await prisma.user.findFirst({
     where: {
@@ -50,7 +51,9 @@ userRoutes.get("/", async (req: Request, res: Response) => {
 
   if (user!.isAdmin) {
     try {
-      const users = await readUsersUseCase.execute();
+      const users = await readUsersUseCase.execute({
+        apiKey,
+      });
 
       return res.status(200).json(users);
     } catch (error) {
@@ -66,7 +69,6 @@ userRoutes.post("/login", async (req: Request, res: Response) => {
     return res.status(400).send("Email and password are required");
   }
 
-  const prismaUsersRepository = new PrismaUsersRepository();
   const loginUserUseCase = new LoginUserUseCase(prismaUsersRepository);
 
   try {
@@ -89,7 +91,6 @@ userRoutes.patch("/:id", async (req: Request, res: Response) => {
     return res.status(400).send("Missing required fields");
   }
 
-  const prismaUsersRepository = new PrismaUsersRepository();
   const updateUserUseCase = new UpdateUserUseCase(prismaUsersRepository);
 
   if (password) {
@@ -132,7 +133,6 @@ userRoutes.delete("/:id", async (req: Request, res: Response) => {
     return res.status(400).send("Missing required fields");
   }
 
-  const prismaUsersRepository = new PrismaUsersRepository();
   const deleteUserUseCase = new DeleteUserUseCase(prismaUsersRepository);
 
   const userId = req.headers.userid;

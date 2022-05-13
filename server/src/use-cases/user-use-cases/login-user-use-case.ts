@@ -5,7 +5,7 @@ export class LoginUserUseCase {
 
   async execute(data: UserCreateData) {
     try {
-      const user = await this.usersRepository.login(data.email, data.password);
+      const user = await this.usersRepository.login(data.email!, data.password!);
       return user;
     } catch (error) {
       throw error;

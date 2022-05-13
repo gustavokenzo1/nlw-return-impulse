@@ -3,13 +3,19 @@ import { UserCreateData, UsersRepository } from "../users-repository";
 import bcrypt from "bcryptjs";
 
 export class PrismaUsersRepository implements UsersRepository {
-  async create({ name, email, password, isAdmin }: UserCreateData) {
+  async create({ name, email, password, isAdmin, apiKey }: UserCreateData) {
     if (name && email && password) {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const userExists = await prisma.user.count({
         where: {
           email,
+        },
+      });
+
+      const organizationExists = await prisma.organization.findFirst({
+        where: {
+          apiKey,
         },
       });
 
@@ -21,6 +27,7 @@ export class PrismaUsersRepository implements UsersRepository {
               email,
               password: hashedPassword,
               isAdmin,
+              organizationId: organizationExists ? organizationExists.id : null,
             },
           });
         } catch (error) {
@@ -32,9 +39,19 @@ export class PrismaUsersRepository implements UsersRepository {
     }
   }
 
-  async read() {
+  async read({ apiKey }: UserCreateData) {
+    const organizationExists = await prisma.organization.findFirst({
+      where: {
+        apiKey,
+      },
+    });
+
     try {
-      const users = await prisma.user.findMany();
+      const users = await prisma.user.findMany({
+        where: {
+          organizationId: organizationExists ? organizationExists.id : null,
+        },
+      });
 
       return users;
     } catch (error) {

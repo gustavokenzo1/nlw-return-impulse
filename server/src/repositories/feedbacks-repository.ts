@@ -5,6 +5,7 @@ export interface FeedbackCreateData {
   comment: string;
   screenshot?: string;
   user: string;
+  apiKey: string;
 }
 
 export interface FeedbacksRepository {
@@ -12,5 +13,5 @@ export interface FeedbacksRepository {
   read: (userId: string) => Promise<object[]>;
   update: (id: string, data: object) => Promise<void>;
   delete: (id: string) => Promise<void>;
-  readAll: () => Promise<object[]>;
+  readAll: (apiKey: string) => Promise<object[]>;
 }
