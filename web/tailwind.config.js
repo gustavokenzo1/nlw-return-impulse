@@ -14,6 +14,7 @@ module.exports = {
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
+        rubik: ["Rubik", "sans-serif"],
       },
       height: {
         "almost-full": "90vh",

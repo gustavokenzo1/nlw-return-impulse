@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-  @apply bg-[#09090a] text-zinc-100;
+  @apply dark:bg-zinc-800 bg-zinc-100 text-zinc-100;
 }
