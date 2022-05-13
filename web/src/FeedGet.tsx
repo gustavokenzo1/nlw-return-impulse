@@ -1,20 +1,24 @@
 import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./components/Modal";
 import { Widget } from "./components/Widget";
-import AuthProvider from "./context/auth";
+import AuthProvider, { useAuth } from "./context/auth";
 
-export function FeedGet() {
+interface Props {
+  apiKey: string;
+}
+
+export function FeedGet({ apiKey }: Props) {
   const [modal, setModal] = useState(false);
 
   return (
     <AuthProvider>
       <div className="flex justify-center items-center h-screen">
         <AnimatePresence exitBeforeEnter>
-          {modal && <Modal setModal={setModal} modal={modal} />}
+          {modal && <Modal setModal={setModal} modal={modal} apiKey={apiKey} />}
         </AnimatePresence>
 
-        <Widget setModal={setModal} modal={modal} />
+        <Widget setModal={setModal} modal={modal} apiKey={apiKey} />
       </div>
     </AuthProvider>
   );

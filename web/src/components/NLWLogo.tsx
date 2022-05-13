@@ -50,8 +50,8 @@ export default function NLWLogo({ mode }: { mode: "light" | "dark" }) {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#8257E5"></stop>
-          <stop offset="0.53" stop-color="#D72891"></stop>
-          <stop offset="1" stop-color="#F1594B"></stop>
+          <stop offset="0.53" stopColor="#D72891"></stop>
+          <stop offset="1" stopColor="#F1594B"></stop>
         </linearGradient>
       </defs>
     </svg>

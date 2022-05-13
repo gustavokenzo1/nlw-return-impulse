@@ -21,6 +21,7 @@ import { Loading } from "../WidgetForm/Loading";
 export interface ModalProps {
   setModal: (modal: boolean) => void;
   modal: boolean;
+  apiKey: string;
 }
 
 const dropIn = {
@@ -72,7 +73,7 @@ export default function Modal({ setModal }: ModalProps) {
   const [feedbacksLoading, setFeedbacksLoading] = useState(false);
   const [userLoading, setUserLoading] = useState(false);
 
-  const { user, logout } = useAuth();
+  const { user, logout, apiKey } = useAuth();
   const [userData, setUserData] = useState(user as UserProps);
 
   useEffect(() => {
@@ -91,6 +92,7 @@ export default function Modal({ setModal }: ModalProps) {
           response = await api.get("/feedbacks", {
             headers: {
               userId: userData.id,
+              apikey: apiKey,
             },
           });
         } else {
@@ -149,6 +151,7 @@ export default function Modal({ setModal }: ModalProps) {
       const response = await api.get("/users", {
         headers: {
           userId: userData.id,
+          apikey: apiKey,
         },
       });
       setUsers(await response.data);
@@ -379,7 +382,10 @@ export default function Modal({ setModal }: ModalProps) {
                                     className="hover:opacity-50 opacity-75 w-1/2 max-h-20 transition-all"
                                   />
                                   <div className="absolute">
-                                    <MagnifyingGlassPlus size={18} color="#fff" />
+                                    <MagnifyingGlassPlus
+                                      size={18}
+                                      color="#fff"
+                                    />
                                   </div>
                                 </div>
                               ) : (

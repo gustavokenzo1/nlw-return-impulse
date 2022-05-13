@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 import bugImageUrl from "../../assets/bug.svg";
 import ideaImageUrl from "../../assets/idea.svg";
@@ -68,92 +68,95 @@ export function WidgetForm({ setModal }: ModalProps) {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, transform: "scale(0.5)" }}
-      animate={{ opacity: 1, transform: "scale(1)" }}
-      transition={{ duration: 0.2 }}
-      key="feedback-form"
-    >
-      <div className="bg-white dark:bg-zinc-900 p-4 relative rounded-2xl mb-4 flex flex-col items-center shadow-lg w-[calc(100vw-2rem)] md:w-auto transition-all duration-200">
-        {login ? (
-          <Login setLogin={setLogin} setRegister={setRegister} />
-        ) : register ? (
-          <Register setLogin={setLogin} setRegister={setRegister} />
-        ) : (
-          <>
-            {feedbackSent ? (
-              <FeedbackSuccessStep
-                onFeedbackRestartRequested={handleRestartFeedback}
-              />
-            ) : (
-              <>
-                {!feedbackType ? (
-                  <>
-                    <FeedbackTypeStep onFeedbackTypeChange={setFeedbackType} />
-                    {!signed ? (
-                      <button
-                        type="button"
-                        className="text-zinc-100 p-2 w-32 mb-4 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
-                        onClick={() => setLogin(true)}
-                      >
-                        Login
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="text-zinc-100 p-2 w-3/4 mb-4 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
-                        onClick={() => setModal(true)}
-                      >
-                        {(user as UserProps)!.isAdmin
-                          ? "Painel de Administrador"
-                          : "Acompanhar seus feedbacks"}
-                      </button>
-                    )}
-                  </>
-                ) : (
-                  <FeedbackContentStep
-                    feedbackType={feedbackType}
-                    onFeedbackRestartRequested={handleRestartFeedback}
-                    onFeedbackSent={() => setFeedbackSent(true)}
-                  />
-                )}
-              </>
-            )}
-          </>
-        )}
-
-        <footer className="text-xs text-neutral-400 flex w-full justify-between">
-          <div>
-            Feito por{" "}
-            <a
-              href="https://github.com/gustavokenzo1"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-zinc-300 transition-colors"
-            >
-              Gustavo Kenzo{" "}
-            </a>
-            no{" "}
-            <a
-              href="https://nextlevelweek.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-zinc-300 transition-colors"
-            >
-              NLW
-            </a>
-          </div>
-          {colorTheme === "light" ? (
-            <button onClick={handleDarkModeToggle}>
-              <Sun size={24} className="cursor-pointer" />
-            </button>
+      <motion.div
+        initial={{ opacity: 0, transform: "scale(0.5)" }}
+        animate={{ opacity: 1, transform: "scale(1)" }}
+        exit={{ opacity: 0, transform: "scale(0.5)" }}
+        transition={{ duration: 0.2 }}
+        key="feedback-form"
+      >
+        <div className="bg-white dark:bg-zinc-900 p-4 relative rounded-2xl mb-4 flex flex-col items-center shadow-lg w-[calc(100vw-2rem)] md:w-auto transition-all duration-200">
+          {login ? (
+            <Login setLogin={setLogin} setRegister={setRegister} />
+          ) : register ? (
+            <Register setLogin={setLogin} setRegister={setRegister} />
           ) : (
-            <button onClick={handleDarkModeToggle}>
-              <MoonStars size={24} className="cursor-pointer" />
-            </button>
+            <>
+              {feedbackSent ? (
+                <FeedbackSuccessStep
+                  onFeedbackRestartRequested={handleRestartFeedback}
+                />
+              ) : (
+                <>
+                  {!feedbackType ? (
+                    <>
+                      <FeedbackTypeStep
+                        onFeedbackTypeChange={setFeedbackType}
+                      />
+                      {!signed ? (
+                        <button
+                          type="button"
+                          className="text-zinc-100 p-2 w-32 mb-4 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
+                          onClick={() => setLogin(true)}
+                        >
+                          Login
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="text-zinc-100 p-2 w-3/4 mb-4 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
+                          onClick={() => setModal(true)}
+                        >
+                          {(user as UserProps)!.isAdmin
+                            ? "Painel de Administrador"
+                            : "Acompanhar seus feedbacks"}
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    <FeedbackContentStep
+                      feedbackType={feedbackType}
+                      onFeedbackRestartRequested={handleRestartFeedback}
+                      onFeedbackSent={() => setFeedbackSent(true)}
+                    />
+                  )}
+                </>
+              )}
+            </>
           )}
-        </footer>
-      </div>
-    </motion.div>
+
+          <footer className="text-xs text-neutral-400 flex w-full justify-between">
+            <div>
+              Feito por{" "}
+              <a
+                href="https://github.com/gustavokenzo1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-zinc-300 transition-colors"
+              >
+                Gustavo Kenzo{" "}
+              </a>
+              no{" "}
+              <a
+                href="https://nextlevelweek.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-zinc-300 transition-colors"
+              >
+                NLW
+              </a>
+            </div>
+            {colorTheme === "light" ? (
+              <button onClick={handleDarkModeToggle}>
+                <Sun size={24} className="cursor-pointer" />
+              </button>
+            ) : (
+              <button onClick={handleDarkModeToggle}>
+                <MoonStars size={24} className="cursor-pointer" />
+              </button>
+            )}
+          </footer>
+        </div>
+      </motion.div>
   );
 }

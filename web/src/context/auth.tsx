@@ -1,21 +1,20 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../libs/api";
 
-interface LoginResponse {
-  status: number;
-}
-
 interface AuthContextData {
   signed: boolean;
   user: object | null;
   login: (data: object) => Promise<any>;
   logout: () => void;
+  apiKey: string,
+  setApiKey: (apiKey: string) => void;
 }
 
 const AuthContext = createContext({} as AuthContextData);
 
 export default function AuthProvider({ children }: any) {
   const [user, setUser] = useState(null);
+  const [apiKey, setApiKey] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
@@ -37,7 +36,7 @@ export default function AuthProvider({ children }: any) {
   }
 
   return (
-    <AuthContext.Provider value={{ signed: !!user, user, login, logout }}>
+    <AuthContext.Provider value={{ signed: !!user, user, login, logout, apiKey, setApiKey }}>
       {children}
     </AuthContext.Provider>
   );
@@ -45,7 +44,7 @@ export default function AuthProvider({ children }: any) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  const { signed, user, login, logout } = context;
+  const { signed, user, login, logout, apiKey, setApiKey } = context;
 
-  return { signed, user, login, logout };
+  return { signed, user, login, logout, apiKey, setApiKey };
 }

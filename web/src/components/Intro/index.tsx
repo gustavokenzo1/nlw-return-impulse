@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import NLWLogo from "../NLWLogo";
@@ -11,9 +11,13 @@ import step from "../../assets/step.png";
 import final from "../../assets/final.png";
 import admin from "../../assets/admin.png";
 import user from "../../assets/user.png";
+import { Loading } from "../WidgetForm/Loading";
+import { api } from "../../libs/api";
 
 export default function Intro({ children }: any) {
   const [colorTheme, setTheme] = useDarkMode();
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     AOS.init({
@@ -30,6 +34,33 @@ export default function Intro({ children }: any) {
   function handleDarkModeToggle() {
     localStorage.setItem("theme", colorTheme === "dark" ? "light" : "dark");
     setTheme(colorTheme);
+  }
+
+  async function handleCreateOrganization() {
+    if (!email) {
+      alert("Por favor, informe seu email.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await api.post("/organizations", {
+        email,
+      });
+
+      if (response.status === 201) {
+        setLoading(false);
+        alert("Cadastro realizado com sucesso!");
+        setEmail("");
+      } else {
+        setLoading(false);
+        alert("Erro ao cadastrar, tente novamente.");
+      }
+    } catch (error) {
+      setLoading(false);
+      alert("Erro ao cadastrar, tente novamente.");
+    }
   }
 
   return (
@@ -83,7 +114,7 @@ export default function Intro({ children }: any) {
           </div>
           <div className="w-1/2 flex items-center justify-center">
             <div
-              className="flex bg-[#373a49] rounded-xl p-2 flex-col shadow-2xl mt-10"
+              className="flex bg-[#373a49] rounded-xl p-2 flex-col shadow-2xl m-10"
               data-aos="zoom-in"
             >
               <div className="flex">
@@ -108,32 +139,59 @@ export default function Intro({ children }: any) {
                   <span className="text-[#ff79c6]">export function </span>
                   <span className="text-[#50fa7b]"> App </span>( ) &#123;
                 </h2>
+                <h2 className="text-xl font-medium text-[#6272a4] m-4 ml-8">
+                  // Recomendável guardar em variável de ambiente
+                </h2>
+                <h2 className="text-xl font-medium text-zinc-200 m-4 ml-8">
+                  <span className="text-[#ff79c6]">const </span>
+                  <span className="text-[##f8f8f2]"> API_KEY = "exemplo"</span>
+                </h2>
                 <h2 className="text-xl font-medium text-zinc-200 m-4 ml-8">
                   <span className="text-[#ff79c6]">return </span>
                   &#60; <span className="text-[#8be9fd]">FeedGet </span>
+                  <span className="text-[#50fa7b]"> apiKey</span>
+                  <span className="text-[#f8f8f2]">=&#123;API_KEY&#125; </span>
                   /&#62;
                 </h2>
                 <h2 className="text-xl font-medium text-zinc-200 ml-4">
                   &#125;
                 </h2>
               </div>
-              <h1 className="text-xl font-medium ml-8 mt-2 mr-8 text-zinc-200">
-                Para fazer a integração com a API, contate-nos em:
-              </h1>
-              <div className="text-xl font-medium ml-8 mt-2 text-zinc-200 mb-5 flex gap-2 items-center">
-                <EnvelopeSimple size={32} />
-                <h1>
-                  <a
-                    href="
-                mailto:feedget.impulse@gmail.com
-                "
-                    className="text-zinc-200 hover:text-brand-300 transition-all"
-                  >
-                    feedget.impulse@gmail.com
-                  </a>
-                </h1>
-              </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="w-full h-screen flex flex-col items-center justify-center">
+        <h1 className="text-xl font-medium mt-2 text-zinc-800 dark:text-zinc-200 text-center pl-8 pr-8">
+          Para obter uma chave para a API, basta informar o e-mail da sua
+          aplicação, levando em conta que:
+        </h1>
+        <h1 className="text-xl font-medium text-zinc-800 dark:text-zinc-200 text-center mt-4">
+          1. Esse e-mail será usado para receber todas as notificações, então é
+          recomendável criar um apenas para isso
+        </h1>
+        <h1 className="text-xl font-medium text-zinc-800 dark:text-zinc-200 text-center mt-4 mb-16">
+          2. Precisa utilizar o serviço do Gmail (podendo ser e-mail corporativo, institucional, etc...)
+        </h1>
+        <div className="w-full">
+          <div
+            className="text-xl font-medium ml-6 mt-8 text-zinc-200 mb-5 flex flex-col gap-2 items-center"
+            data-aos="fade-up"
+          >
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="E-mail da aplicação"
+              autoComplete="off"
+              type="email"
+              value={email}
+              className="min-w-[100px] w-1/3 min-h-[30px] text-sm placeholder-zinc-400 text-zinc-800 dark:text-zinc-100 border-zinc-600 bg-transparent rounded-md focus:border-brand-500 focus:ring-brand-500 focus:ring-1 resize-none focus:outline-none scrollbar-thumb-zinc-700 scrollbar-track-transparent scrollbar-thin"
+            />
+            <button
+              onClick={handleCreateOrganization}
+              className="text-zinc-100 self-center p-2 w-1/3 mt-4 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
+            >
+              {loading ? <Loading /> : "Criar minha Organização"}
+            </button>
           </div>
         </div>
       </div>

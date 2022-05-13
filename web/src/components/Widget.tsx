@@ -2,12 +2,22 @@ import { ChatTeardropDots } from "phosphor-react";
 import { Popover } from "@headlessui/react";
 import { WidgetForm } from "./WidgetForm";
 import { ModalProps } from "./Modal";
+import { useAuth } from "../context/auth";
+import { useEffect } from "react";
 
-export function Widget({ setModal, modal }: ModalProps) {
+export function Widget({ setModal, modal, apiKey }: ModalProps) {
+  const { setApiKey } = useAuth();
+
+  useEffect(() => {
+    setApiKey(apiKey);
+  }, []);
+
   return (
     <Popover className="fixed bottom-4 right-4 md:bottom-8 md:right-8 flex flex-col items-end z-10">
       <Popover.Panel>
-        {!modal && <WidgetForm setModal={setModal} modal={modal} />}
+        {!modal && (
+          <WidgetForm setModal={setModal} modal={modal} apiKey={apiKey} />
+        )}
       </Popover.Panel>
 
       <Popover.Button className="bg-brand-500 rounded-full px-3 h-12 text-white flex items-center group">
