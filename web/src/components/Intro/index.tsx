@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import NLWLogo from "../NLWLogo";
 import useDarkMode from "../../hook/useDarkMode";
-import { EnvelopeSimple, MoonStars, Sun } from "phosphor-react";
+import { CaretDoubleDown, MoonStars, Sun } from "phosphor-react";
 import gmail1 from "../../assets/gmail1.png";
 import gmail2 from "../../assets/gmail2.png";
 import menu from "../../assets/menu.png";
@@ -17,7 +17,57 @@ import { api } from "../../libs/api";
 export default function Intro({ children }: any) {
   const [colorTheme, setTheme] = useDarkMode();
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [email, setEmail] = useState("");
+
+  const firstSectionRef = useRef<HTMLDivElement>(null);
+  const secondSectionRef = useRef<HTMLDivElement>(null);
+  const thirdSectionRef = useRef<HTMLDivElement>(null);
+  const fourthSectionRef = useRef<HTMLDivElement>(null);
+  const fifthSectionRef = useRef<HTMLDivElement>(null);
+  const sixthSectionRef = useRef<HTMLDivElement>(null);
+
+  const [currentRef, setCurrentRef] = useState("firstSectionRef");
+
+  function scroll() {
+    if (currentRef === "firstSectionRef") {
+      secondSectionRef.current!.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      setCurrentRef("secondSectionRef");
+    } else if (currentRef === "secondSectionRef") {
+      thirdSectionRef.current!.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      setCurrentRef("thirdSectionRef");
+    } else if (currentRef === "thirdSectionRef") {
+      fourthSectionRef.current!.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      setCurrentRef("fourthSectionRef");
+    } else if (currentRef === "fourthSectionRef") {
+      fifthSectionRef.current!.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      setCurrentRef("fifthSectionRef");
+    } else if (currentRef === "fifthSectionRef") {
+      sixthSectionRef.current!.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      setCurrentRef("sixthSectionRef");
+    } else if (currentRef === "sixthSectionRef") {
+      firstSectionRef.current!.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      setCurrentRef("firstSectionRef");
+    }
+  }
 
   useEffect(() => {
     AOS.init({
@@ -51,8 +101,8 @@ export default function Intro({ children }: any) {
 
       if (response.status === 201) {
         setLoading(false);
-        alert("Cadastro realizado com sucesso!");
         setEmail("");
+        setSuccess(true);
       } else {
         setLoading(false);
         alert("Erro ao cadastrar, tente novamente.");
@@ -66,7 +116,10 @@ export default function Intro({ children }: any) {
   return (
     <div className="font-rubik text-zinc-800 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 transition-all duration-500">
       {children}
-      <section className="lg:px-24 md:px-10 min-h-screen w-full flex flex-col md:flex-row items-start md:items-center justify-center">
+      <section
+        ref={firstSectionRef}
+        className="lg:px-24 md:px-10 min-h-screen w-full flex flex-col md:flex-row items-start md:items-center justify-center"
+      >
         <div
           className="w-3/4 self-center md:w-3/4 h-1/2 md:h-3/4 flex flex-col justify-center m-10"
           data-aos="fade-up"
@@ -116,8 +169,12 @@ export default function Intro({ children }: any) {
               <span className="bg-yellow-500 w-4 h-4 rounded-full m-1"></span>
               <span className="bg-green-500 w-4 h-4 rounded-full m-1"></span>
             </div>
-            <h1 className="text-lg md:text-xl lg:text-2xl text-zinc-100">Fácil Uso</h1>
-            <h1 className="text-zinc-100">Clone o repositório e, em seguida:</h1>
+            <h1 className="text-lg md:text-xl lg:text-2xl text-zinc-100">
+              Fácil Uso
+            </h1>
+            <h1 className="text-zinc-100">
+              Clone o repositório e, em seguida:
+            </h1>
             <div className="m-5">
               <h2 className="text-md md:text-lg lg:text-xl font-medium text-zinc-200 m-4">
                 <span className="text-[#ff79c6]">import </span>
@@ -149,8 +206,17 @@ export default function Intro({ children }: any) {
             </div>
           </div>
         </div>
+        <button
+          onClick={() => scroll()}
+          className="fixed flex items-center justify-center bottom-6 left-6 animate-pulse hover:animate-none transition-all z-10 bg-brand-300 w-12 h-12 rounded-full cursor-pointer"
+        >
+          <CaretDoubleDown size={24} color="#fff" />
+        </button>
       </section>
-      <section className="h-screen w-full flex flex-col items-center justify-center">
+      <section
+        ref={secondSectionRef}
+        className="h-screen w-full flex flex-col items-center justify-center"
+      >
         <h1 className="text-lg md:text-xl lg:text-2xl mx-10">
           Para obter uma chave para a API, basta informar o e-mail da sua
           aplicação, levando em conta que:
@@ -175,15 +241,24 @@ export default function Intro({ children }: any) {
             value={email}
             className="w-4/5 sm:w-1/3  min-h-[30px] text-sm placeholder-zinc-400 text-zinc-800 dark:text-zinc-100 border-zinc-600 bg-transparent rounded-md focus:border-brand-500 focus:ring-brand-500 focus:ring-1 resize-none focus:outline-none scrollbar-thumb-zinc-700 scrollbar-track-transparent scrollbar-thin"
           />
-          <button
-            onClick={handleCreateOrganization}
-            className="text-zinc-100 p-2 w-4/5 sm:w-1/3 mt-4 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
-          >
-            {loading ? <Loading /> : "Criar minha Organização"}
-          </button>
+          {success ? (
+            <button className="text-zinc-100 p-2 cursor-default w-4/5 sm:w-1/3 mt-4 bg-green-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm focus:border-none">
+              Organização criada com sucesso, cheque seu e-mail!
+            </button>
+          ) : (
+            <button
+              onClick={handleCreateOrganization}
+              className="text-zinc-100 p-2 w-4/5 sm:w-1/3 mt-4 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
+            >
+              {loading ? <Loading /> : "Criar minha Organização"}
+            </button>
+          )}
         </div>
       </section>
-      <section className="w-full flex items-center flex-col justify-center min-h-screen">
+      <section
+        ref={thirdSectionRef}
+        className="w-full flex items-center flex-col justify-center min-h-screen"
+      >
         <h1 className="text-lg md:text-xl lg:text-3xl">
           Apenas 3 simples passos:
         </h1>
@@ -217,7 +292,7 @@ export default function Intro({ children }: any) {
           </div>
         </div>
       </section>
-      <section className="w-full min-h-screen">
+      <section ref={fourthSectionRef} className="w-full min-h-screen">
         <div className="flex flex-col w-full items-center justify-center">
           <div className="flex flex-col lg:flex-row items-center m-5 md:m-10 justify-around ">
             <div className="lg:mr-16">
@@ -254,19 +329,23 @@ export default function Intro({ children }: any) {
           </div>
         </div>
       </section>
-      <section className="w-full">
+      <section ref={fifthSectionRef} className="w-full">
         <div className="flex flex-col items-center my-24 mx-5 md:mx-10">
           <h1 className="text-center text-lg md:text-xl lg:text-2xl mb-10">
             Deixe tanto o administrador, quanto os usuários, acompanharem os
             Feedbacks
           </h1>
-          <h1 className="text-center text-md md:text-lg lg:text-xl mt-10 mb-5">Painel de Usuário:</h1>
+          <h1 className="text-center text-md md:text-lg lg:text-xl mt-10 mb-5">
+            Painel de Usuário:
+          </h1>
           <img
             src={user}
             className="lg:w-3/4 rounded-xl shadow-2xl"
             data-aos="zoom-in"
           />
-          <h1 className="text-center text-md md:text-lg lg:text-xl mb-5 mt-32">Painel de Administrador:</h1>
+          <h1 ref={sixthSectionRef} className="text-center text-md md:text-lg lg:text-xl mb-5 mt-32">
+            Painel de Administrador:
+          </h1>
           <img
             src={admin}
             className="lg:w-3/4 rounded-xl shadow-2xl"

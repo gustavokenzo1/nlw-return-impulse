@@ -1,6 +1,7 @@
 import { ArrowLeft } from "phosphor-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../../context/auth";
 import { api } from "../../libs/api";
 import { CloseButton } from "../CloseButton";
 import { Loading } from "../WidgetForm/Loading";
@@ -13,11 +14,16 @@ interface Props {
 export function Register({ setRegister, setLogin }: Props) {
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm();
+  const { apiKey } = useAuth();
 
   async function handleRegister(data: object) {
     setLoading(true);
     try {
-      const response = await api.post("/users", data);
+      const body = {
+        ...data,
+        apiKey,
+      };
+      const response = await api.post("/users", body);
 
       if (response.status === 201) {
         setLoading(false);
