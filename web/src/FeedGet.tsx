@@ -13,7 +13,7 @@ export function FeedGet({ apiKey }: Props) {
 
   return (
     <AuthProvider>
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex fixed z-10 justify-center items-center">
         <AnimatePresence exitBeforeEnter>
           {modal && <Modal setModal={setModal} modal={modal} apiKey={apiKey} />}
         </AnimatePresence>
