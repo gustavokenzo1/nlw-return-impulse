@@ -66,7 +66,7 @@ export default function Intro({ children }: any) {
   return (
     <div className="font-rubik text-zinc-800 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 transition-all duration-500">
       {children}
-      <section className="md:px-10 min-h-screen w-full flex flex-col md:flex-row items-start md:items-center justify-center">
+      <section className="lg:px-24 md:px-10 min-h-screen w-full flex flex-col md:flex-row items-start md:items-center justify-center">
         <div
           className="w-3/4 self-center md:w-3/4 h-1/2 md:h-3/4 flex flex-col justify-center m-10"
           data-aos="fade-up"
@@ -219,8 +219,8 @@ export default function Intro({ children }: any) {
       </section>
       <section className="w-full min-h-screen">
         <div className="flex flex-col w-full items-center justify-center">
-          <div className="flex flex-col lg:flex-row items-center m-10 justify-around ">
-            <div className="mr-16">
+          <div className="flex flex-col lg:flex-row items-center m-5 md:m-10 justify-around ">
+            <div className="lg:mr-16">
               <h1 className="text-center text-md md:text-lg lg:text-xl">
                 Quando um Feedback é enviado, um e-mail também é enviado
                 automaticamente para o administrador.
@@ -236,8 +236,8 @@ export default function Intro({ children }: any) {
               data-aos="fade-up"
             />
           </div>
-          <div className="flex flex-col lg:flex-row-reverse items-center justify-around m-10">
-            <div className="ml-16">
+          <div className="flex flex-col lg:flex-row-reverse items-center justify-around m-5 md:m-10">
+            <div className="lg:ml-16">
               <h1 className="text-center text-md md:text-lg lg:text-xl">
                 Um administrador pode marcar um Feedback como lido.
               </h1>
@@ -254,19 +254,19 @@ export default function Intro({ children }: any) {
           </div>
         </div>
       </section>
-      <section className="bg-red-500 w-full">
-        <div>
-          <h1>
+      <section className="w-full">
+        <div className="flex flex-col items-center my-24 mx-5 md:mx-10">
+          <h1 className="text-center text-lg md:text-xl lg:text-2xl mb-10">
             Deixe tanto o administrador, quanto os usuários, acompanharem os
             Feedbacks
           </h1>
-          <h1>Painel de Usuário:</h1>
+          <h1 className="text-center text-md md:text-lg lg:text-xl mt-10 mb-5">Painel de Usuário:</h1>
           <img
             src={user}
             className="lg:w-3/4 rounded-xl shadow-2xl"
             data-aos="zoom-in"
           />
-          <h1>Painel de Administrador:</h1>
+          <h1 className="text-center text-md md:text-lg lg:text-xl mb-5 mt-32">Painel de Administrador:</h1>
           <img
             src={admin}
             className="lg:w-3/4 rounded-xl shadow-2xl"
