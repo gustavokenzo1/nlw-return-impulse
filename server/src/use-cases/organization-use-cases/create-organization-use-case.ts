@@ -50,6 +50,7 @@ export class CreateOrganizationUseCase {
         email,
         isAdmin: true,
         password: hashedPassword,
+        apiKey,
       });
     } else {
       await this.usersRepository.update(userExists.id, { isAdmin: true });
