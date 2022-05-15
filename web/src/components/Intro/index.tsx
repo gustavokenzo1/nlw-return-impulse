@@ -109,7 +109,7 @@ export default function Intro({ children }: any) {
       }
     } catch (error) {
       setLoading(false);
-      alert("Erro ao cadastrar, tente novamente.");
+      alert("Esse email já está cadastrado.");
     }
   }
 
