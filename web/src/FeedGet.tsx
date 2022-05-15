@@ -1,8 +1,8 @@
 import { AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "./components/Modal";
 import { Widget } from "./components/Widget";
-import AuthProvider, { useAuth } from "./context/auth";
+import AuthProvider from "./context/auth";
 
 interface Props {
   apiKey: string;
