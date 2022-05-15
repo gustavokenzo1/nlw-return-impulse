@@ -223,7 +223,7 @@ export default function Modal({ setModal }: ModalProps) {
         initial="hidden"
         animate="visible"
         exit="exit"
-        className="w-4/5 md:w-3/4 h-3/4 absolute dark:bg-zinc-900 bg-white p-6 rounded-lg flex flex-col items-center justify-betwee transition-colors"
+        className="w-5/6 md:w-3/4 h-3/4 absolute dark:bg-zinc-900 bg-white p-6 rounded-lg flex flex-col items-center justify-betwee transition-colors"
       >
         <div className="flex w-full justify-between items-center mb-4">
           {colorTheme === "light" ? (
@@ -249,7 +249,7 @@ export default function Modal({ setModal }: ModalProps) {
           </button>
         </div>
         {userData.isAdmin && (
-          <div className="mb-4 flex w-full justify-between">
+          <div className="mb-4 flex flex-col md:flex-row w-full justify-between">
             <select
               onChange={(e) => handleSelect(e)}
               className="text-zinc-800 rounded-md bg-white dark:bg-zinc-800 dark:text-zinc-100"
@@ -264,7 +264,7 @@ export default function Modal({ setModal }: ModalProps) {
             </select>
             <button
               onClick={handleGetUsers}
-              className="text-zinc-100 p-2 w-1/5 mt-4 bg-brand-500 rounded-md border-transparent flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
+              className="text-zinc-100 p-2 w-full md:w-1/5 mt-4 bg-brand-500 rounded-md border-transparent flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
             >
               Ver usuários
             </button>
@@ -292,7 +292,7 @@ export default function Modal({ setModal }: ModalProps) {
                   </tr>
                 </thead>
                 <tbody className="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
-                  {users.map((user) => (
+                  {users.map((user, index) => (
                     <tr
                       key={user.id}
                       className="border-b hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-all"
@@ -302,7 +302,15 @@ export default function Modal({ setModal }: ModalProps) {
                       <td className="px-6 py-5 flex justify-center items-center">
                         {user.isAdmin ? (
                           <button
-                            onClick={() => handleUserPrivilege(user.id, true)}
+                            onClick={() => {
+                              if (index !== 0) {
+                                handleUserPrivilege(user.id, true);
+                              } else {
+                                alert(
+                                  "Você não pode se tirar o privilégio de um administrador!"
+                                );
+                              }
+                            }}
                           >
                             <ThumbsUp
                               size={20}

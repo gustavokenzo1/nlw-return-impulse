@@ -25,7 +25,7 @@ export class PrismaOrganizationsRepository implements OrganizationsRepository {
 
       const organizationExists = await prisma.organization.count({
         where: {
-          apiKey,
+          email,
         },
       });
 
@@ -34,6 +34,7 @@ export class PrismaOrganizationsRepository implements OrganizationsRepository {
           await prisma.organization.create({
             data: {
               apiKey,
+              email,
             },
           });
           return apiKey;

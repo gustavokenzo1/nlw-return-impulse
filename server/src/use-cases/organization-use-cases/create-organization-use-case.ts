@@ -2,7 +2,6 @@ import { MailAdapter } from "../../adapters/mail-adapter";
 import { prisma } from "../../prisma";
 import { OrganizationsRepository } from "../../repositories/organizations-repository";
 import { UsersRepository } from "../../repositories/users-repository";
-import bcrypt from "bcryptjs";
 
 export interface CreateOrganizationUseCaseRequest {
   email: string;

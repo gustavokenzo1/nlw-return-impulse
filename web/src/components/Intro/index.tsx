@@ -189,11 +189,11 @@ export default function Intro({ children }: any) {
               <h2 className="text-md md:text-lg lg:text-xl font-medium text-[#6272a4] m-4 ml-8">
                 // Recomendável guardar em variável de ambiente
               </h2>
-              <h2 className="text-md md:text-lg lg:text-xlfont-medium text-zinc-200 m-4 ml-8">
+              <h2 className="text-md md:text-lg lg:text-xl font-medium text-zinc-200 m-4 ml-8">
                 <span className="text-[#ff79c6]">const </span>
                 <span className="text-[##f8f8f2]"> API_KEY = "exemplo"</span>
               </h2>
-              <h2 className="text-md md:text-lg lg:text-xlfont-medium text-zinc-200 m-4 ml-8">
+              <h2 className="text-md md:text-lg lg:text-xl font-medium text-zinc-200 m-4 ml-8">
                 <span className="text-[#ff79c6]">return </span>
                 &#60; <span className="text-[#8be9fd]">FeedGet </span>
                 <span className="text-[#50fa7b]"> apiKey</span>
