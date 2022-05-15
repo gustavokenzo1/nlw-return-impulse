@@ -165,7 +165,16 @@ export default function Intro({ children }: any) {
             className="bg-[#373a49] p-4 w-full md:w-auto rounded-xl mx-5 sm:m-10 md:m-0 lg:m-10"
           >
             <div className="flex pb-4">
-              <span className="bg-red-500 w-4 h-4 rounded-full m-1"></span>
+              <span className="bg-red-500 w-4 h-4 rounded-full m-1 cursor-pointer flex items-center justify-center">
+                <a
+                  href="https://www.youtube.com/watch?v=xvFZjo5PgG0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-transparent"
+                >
+                  x
+                </a>
+              </span>
               <span className="bg-yellow-500 w-4 h-4 rounded-full m-1"></span>
               <span className="bg-green-500 w-4 h-4 rounded-full m-1"></span>
             </div>
@@ -343,7 +352,10 @@ export default function Intro({ children }: any) {
             className="lg:w-3/4 rounded-xl shadow-2xl"
             data-aos="zoom-in"
           />
-          <h1 ref={sixthSectionRef} className="text-center text-md md:text-lg lg:text-xl mb-5 mt-32">
+          <h1
+            ref={sixthSectionRef}
+            className="text-center text-md md:text-lg lg:text-xl mb-5 mt-32"
+          >
             Painel de Administrador:
           </h1>
           <img
