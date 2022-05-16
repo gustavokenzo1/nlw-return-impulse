@@ -1,64 +1,19 @@
-# Next Level Week - Return - Impulse
+# NLW Return - Trilha Impulse
 
-Repositório para guardar os conteúdos passados na trilha Impulse do NLW Return da Rocketseat
+## FeedGet
 
-# Aula 1 <!-- #NextLevel -->
+FeedGet foi o projeto proposto pela Rocketseat para a trilha Impulse nesse NLW. Ele consiste em um widget de coleta de feedbacks, em que o usuário pode selecionar o tipo de feedback, tirar uma screenshot e enviar um e-mail utilizando o serviço MailTrap.
 
-### Criação do componente de feedback, utilizando o Headless UI para melhorar a acessibilidade da aplicação
+## Extra Mile: Qualquer alteração em cima disso
 
-Figma: https://www.figma.com/community/file/1102912516166573468
-<br />
-<br />
-Techs: 
-- React
-- TypeScript
-- Vite
-- Tailwind
-- Headless UI
+### Alterações:
 
-# Aula 2 <!-- #NeverStopLearning -->
+Como a ideia é ser um widget de feedbacks que interage com um backend, é importante que ele seja reutilizável em outras aplicações de maneira fácil. Para isso, na Landing Page que eu criei para o projeto, há a possibilidade de informar um e-mail, para que seja criada uma Organização para cada projeto. Com isso, o usuário recebe uma chave para a API, a qual ele passará como props no componente do FeedGet.
 
-### Finalização do Frontend (nada muito novo)
+Dentro de uma organização, há os usuários. Eu resolvi criar um CRUD (Create, Read, Update, Delete) de usuários justamente para que os usuários do site possam acompanhar por meio de uma Dashboard pessoal os status de todos os seus feedbacks enviados. Além dos usuários normais, há os Admins, que têm o poder de ler todos os feedbacks de todos os usuários, marcar como lido, excluir, ordenar os feedbacks por tipos, listar todos os usuários cadastrados e transformar um usuário em Admin. 
 
-# Aula 3 <!-- #NewSkills -->
+Para criar um usuário, basta fazer o registor por meio do próprio FeedGet, que é um processo bem simples, assim como o de login.
 
-- Essa sim foi mindblow
-- Banco de dados SQL com o Prisma (delicinha)
-- Nodemailer
-- SOLID 
-- Testes unitários com Jest
+Quanto aos e-mails, o MailTrap é um serviço utilizado durante o processo de desenvolvimento da aplicação. Então, para colocar em produção, eu utilizei o serviço do Gmail. Primeiramente, alterei o estilo do e-mail para se adequar melhor à identidade visual do projeto. Depois, coloquei para que os e-mails sejam enviados para todos os Admins e para o usuário (caso esteja logado) quando um feedback é enviado. Como mencionando anteriormente, um e-mail também é enviado quando um usuário solicita  a criação de uma organização. Além disso, o usuário também recebe um e-mail quando um feedback é marcado como lido pelo admin.
 
-# Aula 4 <!-- #StepByStep -->
-
-- React Native com Expo basicamente
-
-# Aula 5 <!-- #MissionAccomplished -->
-
-- Deploy do front na Vercel e do back no Railway
-
-# Next Level
-## Features extras:
-- Adicionada Landing Page descrevendo o projeto
-- CRUD de Feedback
-- CRUD de Usuário (com login)
-- Tema light e dark
-- Animações com Framer Motion
-- Painel de Usuário:
-  - Ver feedbacks mandados (tipo, comentário, screenshot, data de envio)
-  - Acompanhar o status de cada feedback (lido ou não lido)
-  
-- Painel de Administrador:
-  - Ver todos os feedbacks de todos os usuários
-  - Poder marcar um feedback como lido 
-  - Excluir feedback
-  - Agrupar feedback por tipo (bug, ideia, outro)
-  - Ver todos os usuários cadastrados (podendo transformar outro usuário em administrador)
-  
-- E-mails:
-  - Trocado serviço do MailTrap para o Gmail, o que permite que os usuários de fato recebam o e-mail
-  - Alterado a aparência do e-mail
-  - Quando um usuário cadastrado envia um feedback, ele recebe no e-mail dele que o feedback foi enviado
-  - O mesmo e-mail é enviado para o e-mail da aplicação (criado exclusivamente para o projeto)
-  - Quando um administrador marca que leu o feedback, o usuário recebe uma notificação pelo e-mail
-
-Mobile: Intacto por falta de tempo :(
+Para finalizar, aquele Theme Switcher básico, pois estamos em 2022 (ah, e ainda tem um easter egg na página principal da landing page).
